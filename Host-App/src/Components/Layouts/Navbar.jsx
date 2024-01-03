@@ -1,22 +1,27 @@
-import { Fragment } from "react";
+import { Fragment ,lazy,Suspense} from "react";
 import { Button, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { signOutUser } from "../../Redux/actionCreators/authActions";
 import { useDispatch } from "react-redux";
-import { changeFolder } from "../../Redux/actionCreators/FolderActions";
-
+import { changeFolder } from "Folders_MFE/actions";
+import { signOutUser } from "Auth_MFE/authActions";
 const NavbarComponent =()=>{
     
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useSelector(state =>state.auth);
-
+  const { isAuthenticated, user } = useSelector((state) =>({
+    isAuthenticated : state.auth.isAuthenticated ,
+    user : state.auth.user,
+  }));
   const handleToDashboard =()=>{
     dispatch(changeFolder("root"));
     navigate("/dashboard");
   }
-
+  // const handleSignOutUser =()=>{
+  //   dispatch(signOutUser());
+  //   navigate("/dashboard");
+  // }
+  
   return (
     <Navbar bg="white" expand="lg" variant="light"className="border-bottom py-3 shadow-sm">
         <Navbar.Brand style={{ marginLeft: "60px", marginRight: "auto" }} >

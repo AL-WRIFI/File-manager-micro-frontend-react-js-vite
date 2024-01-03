@@ -1,34 +1,86 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
 
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer} from 'react-toastify';
+import { Fragment ,lazy,Suspense,useEffect} from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useSelector ,shallowEqual, useDispatch} from "react-redux";
+import { gitFolders } from "./Redux/actionCreators/FolderActions/GetFolders";
+import { gitFiles } from "./Redux/actionCreators/FileActions/GetFiles";
+// import Settings from './Components/Settings/Settings';
+import NavbarComponent from './Components/Layouts/Navbar';
+import Dashboard from './Components/Dashboard';
+import Index from "./Components/Index";
+// import InfoFile from './components/Dashboard/infoFile';
+// const FileComponent = lazy (()=> import("Files_MFE/FileComponent")); 
+const FoldersList = lazy (()=> import("Folders_MFE/FoldersList"));
+const FilterPage = lazy (()=> import("Shared/FilterPage")); 
+const Register = lazy (()=> import("Auth_MFE/Register")); 
+const Login = lazy (()=> import("Auth_MFE/Login")); 
+const Settings = lazy (()=> import("Settings_MFE/settings")); 
+import "./App.css";
+import { useState } from 'react';
 function App() {
-  const [count, setCount] = useState(0)
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const { isAuthenticated , userId } = useSelector((state) =>({ 
+      isAuthenticated : state.auth.isAuthenticated ,
+      userId: state.auth.user.uid,
+  }),shallowEqual);
+
+  useEffect(()=>{
+      if(!isAuthenticated){
+          navigate("/login");
+      }else{
+        dispatch(gitFolders(userId));
+        dispatch(gitFiles(userId));
+        navigate("/dashboard");
+      }
+  },[isAuthenticated]);
+
+  const [darkMode, setDarkMode] = useState(false);
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    
+    <Fragment>
+      
+      
+    <div className={darkMode ? "dark-mode" : "light-mode"}>
+      <div className="container1">
+        <span style={{ color: darkMode ? "grey" : "yellow" }}>☀︎</span>
+        <div className="switch-checkbox">
+          <label className="switch">
+            <input type="checkbox" onChange={() => setDarkMode(!darkMode)} />
+            <span className="slider round"> </span>
+          </label>
+        </div>
+        <span style={{ color: darkMode ? "#c96dfd" : "grey" }}>☽</span>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      {/* <div>
+        <h1>Cool its {darkMode ? "Dark" : "Light"} Mode </h1>
+      </div> */}
+      <NavbarComponent/>
+      <ToastContainer/>
+      <Routes>
+        <Route  path="settings" element={<Suspense> <Settings/> </Suspense>}/>
+        <Route  path="/login" element={ <Suspense> <Login/> </Suspense>} />
+        <Route  path="/signup" element={ <Suspense> <Register/> </Suspense>} />
+        <Route  path="/" element={<Dashboard />}/>
+        <Route  path="/dashboard" element={<Dashboard />}>
+            <Route  path='' element={<Index />} >
+              <Route  path='' element={<Suspense fallback={<div>Loding....</div>}><FoldersList/></Suspense>}/>
+              <Route  path="filter" element={<Suspense><FilterPage /></Suspense>}/>
+              {/* <Route  path="folder/:folderId" element={<FolderComponent />}/> */}
+              {/* <Route  path="file/:fileId" element={<Suspense><FileComponent /></Suspense>}/>     */}
+          </Route>
+        </Route>       
+      </Routes>
+
+
+    </div>
+      
+    </Fragment>
+    
   )
 }
 
