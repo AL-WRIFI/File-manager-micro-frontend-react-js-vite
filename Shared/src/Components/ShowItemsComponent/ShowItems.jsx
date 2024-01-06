@@ -2,21 +2,26 @@ import { Fragment } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { changeFolder } from "Folders_MFE/actions"; 
+// import { changeFile } from "Files_MFE/changeFile"; 
 
 import DropdownItems from "./DropdownItems";
 
 function ShowItems({title , items}){
 
-    // const navigate = useNavigate();
+      const changeFile = (payload) => ({
+        type: "CHANGE_FILE",
+        payload,
+      });
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     
     const handleDoubleClick= (item)=>{
      if(item.data.type === "folder"){
         dispatch(changeFolder(item.docId));
-        //navigate(`/dashboard/folder/${item.docId}`);
+        navigate(`/dashboard/folder/${item.docId}`);
      }else{
-        //dispatch(changeFolder(item.docId));
-        //navigate(`/dashboard/file/${item.docId}`);
+        dispatch(changeFile(item.docId));
+        navigate(`/dashboard/file/${item.docId}`);
      }
     }
 

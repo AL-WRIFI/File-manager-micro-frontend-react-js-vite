@@ -60,6 +60,7 @@ const CreateFolder = () => {
       subFiles:[],
       updatedAt: new Date(),
       userId: user.uid,
+      show:true
     }
     
     try {

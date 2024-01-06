@@ -1,19 +1,21 @@
 import { Fragment } from "react";
 import { shallowEqual, useSelector } from "react-redux";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ShowItems from "../ShowItemsComponent/ShowItems";
 
 const FilterPage = () => {
-    const { filterItems ,filterName } = useSelector((state) => {
+    const { filterName } = useParams();
+    const { filterItems } = useSelector((state) => {
       let itemsToFilter = [];
-      if (state.FilterFiles.filterName === "AllDocs") {
+      if (filterName === "All Docs") {
         itemsToFilter = state.Files.userFiles.filter((file) => !file.data.type.startsWith('image'));
-      } else if (state.FilterFiles.filterName === "AllImage") {
+      } else if (filterName === "All Image") {
         itemsToFilter = state.Files.userFiles.filter((file) => file.data.type.startsWith('image'));
+      } else if (filterName === "Deleted Files") {
+        itemsToFilter = state.Files.userDeletedFiles;
       }
       return { 
         filterItems: itemsToFilter ,
-        filterName : state.FilterFiles.filterName,
        };
     }, shallowEqual);
   

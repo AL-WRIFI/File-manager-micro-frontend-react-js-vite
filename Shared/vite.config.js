@@ -11,6 +11,7 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       remotes: {
         Folders_MFE: "http://localhost:5002/assets/remoteEntry.js",
+        // Files_MFE: "http://localhost:5003/assets/remoteEntry.js",
       },
       exposes: {
         './ShowItems':'./src/Components/ShowItemsComponent/ShowItems',

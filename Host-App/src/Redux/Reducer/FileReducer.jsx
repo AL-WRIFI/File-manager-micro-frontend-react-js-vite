@@ -2,7 +2,9 @@ import * as types from "../actionsTypes/FileActionsType";
 
 const initialState = {
     isLoading:true,
+    currentFile:"",
     userFiles:[],
+    userDeletedFiles:[],
 }
 
 
@@ -19,10 +21,18 @@ const FileReducer = ( state=initialState,action) =>{
             userFiles: [...state.userFiles,action.payload],
         };
         case types.ADD_FILES:
+        const showTrueFiles = action.payload.filter((file)=> file.data.show == true)
+        const showFalseFiles = action.payload.filter((file)=> file.data.show == false)
         return{
             ...state,
-            userFiles: action.payload,
+            userFiles: showTrueFiles,
+            userDeletedFiles: showFalseFiles
         };
+        case types.CHANGE_FILE:   
+            return{
+                ...state,
+                currentFolder: action.payload,
+            };
         case types.RENAME_FILE:
             const renamedFile = state.userFiles.find( (file) => file.docId === action.payload.docId);
             renamedFile.data.name = action.payload.name;
@@ -47,7 +57,13 @@ const FileReducer = ( state=initialState,action) =>{
                 file.docId === action.payload.docId ? movedfile : file
                 ),
             };
-      
+        case types.ADD_TO_DELETED_FILES:
+            const deletedFile = action.payload;
+            deletedFile.data.show = false;
+            return{
+                ...state,
+                userDeletedFiles:[...state.userDeletedFiles,deletedFile]
+            }
         case types.SET_FILE_DATA:
             const { fileId, data } = action.payload;
             const allFiles = state.userFiles;
@@ -59,7 +75,7 @@ const FileReducer = ( state=initialState,action) =>{
                 file.docId === fileId ? currentFile : file
                 ),
             }; 
-
+        
        default: return state;
     }
 };

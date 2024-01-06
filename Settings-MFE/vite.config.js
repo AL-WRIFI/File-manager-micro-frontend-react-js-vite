@@ -11,6 +11,7 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       remotes: {
         HostApp: "http://localhost:5001/assets/remoteEntry.js",
+        Auth_MFE:"http://localhost:5005/assets/remoteEntry.js",
        },
       exposes: {
           './settings': './src/Components/SettingsComponent/Settings',

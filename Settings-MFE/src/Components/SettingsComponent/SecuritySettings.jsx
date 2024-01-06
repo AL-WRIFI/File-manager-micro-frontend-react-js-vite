@@ -1,6 +1,36 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import fire from "Auth_MFE/fire";
+import { toast } from "react-toastify";
 
 function SecuritySettings(){
+
+  const [oldPassword ,setOldePassword] = useState('');
+  const [password ,setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const user = fire.auth().currentUser;
+  
+
+  const handleSubmit =(e) =>{
+    e.preventDefault();
+    if(!oldPassword || !password || !confirmPassword){
+      toast.error("جميع الحقول اجبارية")
+      return;
+    }
+    if(password !== confirmPassword){
+      toast.error("كلمة المرور غير متطابقه");
+      return;
+    }
+
+    
+    user.updatePassword(password).then(() => {
+      toast.success("تم تغيير كلمه المرور")
+    }).catch((error) => {
+      toast.error("حدث خطأ");
+      console.log(error);
+    });
+      
+  }
+
 
     return(
         <Fragment>
@@ -10,13 +40,18 @@ function SecuritySettings(){
                     <form>
                       <div className="form-group">
                         <label className="d-block">Change Password</label>
-                        <input type="text" className="form-control" placeholder="Enter your old password"/>
-                        <input type="text" className="form-control mt-1" placeholder="New password"/>
-                        <input type="text" className="form-control mt-1" placeholder="Confirm new password"/>
+                        <br />
+                        <input onChange={(e) => setOldePassword(e.target.value)} type="text" className="form-control" placeholder="Enter your old password"/>
+                        <br />
+                        <input onChange={(e) => setPassword(e.target.value)} type="text" className="form-control mt-1" placeholder="New password"/>
+                        <br />
+                        <input onChange={(e) => setConfirmPassword(e.target.value)} type="text" className="form-control mt-1" placeholder="Confirm new password"/>
                       </div>
                     </form>
                     <hr />
-                    <form>
+                    <button onClick={handleSubmit} type="button" className="btn btn-primary">Update Password</button>
+                    <button type="reset" className="btn btn-light">Reset Changes</button>
+                    {/* <form>
                       <div className="form-group">
                         <label className="d-block">Two Factor Authentication</label>
                         <button className="btn btn-info" type="button">Enable two-factor authentication</button>
@@ -38,7 +73,7 @@ function SecuritySettings(){
                           </li>
                         </ul>
                       </div>
-                    </form>
+                    </form> */}
               </div>
         </Fragment>
     )

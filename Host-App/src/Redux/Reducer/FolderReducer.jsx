@@ -5,7 +5,7 @@ const initialState = {
     currentFolder:"root",
     folderStack:["root"],
     userFolders:[],
-
+    userDeletedFolders:[],
 }
 
 
@@ -17,9 +17,12 @@ const FolderReducer = ( state=initialState,action) =>{
             userFolders: [...state.userFolders,action.payload],
         };
        case types.ADD_FOLDER:
+        const showTrueFolders = action.payload.filter((Folders)=> Folders.data.show == true)
+        const showFalseFolders = action.payload.filter((Folders)=> Folders.data.show == false)
         return{
             ...state,
-            userFolders: action.payload,
+            userFolders: showTrueFolders,
+            userDeletedFolders:showFalseFolders,
         };
        case types.SET_LOADING:
         return{
@@ -66,6 +69,13 @@ const FolderReducer = ( state=initialState,action) =>{
                 folder.docId === action.payload.folderId ? movedFolder : folder
                 ),
             };
+            case types.ADD_TO_DELETED_FOLDERS:
+            const deletedFolder = action.payload;
+            deletedFolder.data.show = false;
+            return{
+                ...state,
+                userDeletedFiles:[...state.userDeletedFolders,deletedFolder]
+            }
        default: return state;
     }
 };

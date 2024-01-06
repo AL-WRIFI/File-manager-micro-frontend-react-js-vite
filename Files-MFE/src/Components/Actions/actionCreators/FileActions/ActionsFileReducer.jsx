@@ -34,3 +34,7 @@ export const addFile= (payload)=>({
     payload : {name : name , docId : docId},
   });
   
+  export const changeFile = (payload) => ({
+    type: types.CHANGE_FILE,
+    payload,
+  });

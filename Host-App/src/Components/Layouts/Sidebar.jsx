@@ -1,7 +1,7 @@
 import { Fragment ,lazy,Suspense} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { changeFolder } from "Folders_MFE/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import { addFilterName } from "../../Redux/actionCreators/FilterActions/ActionsFilterReducer";
 
 
@@ -17,7 +17,7 @@ function Sidebar(){
             navigate("/dashboard");
         }else{
             dispatch(addFilterName(filterName));
-            navigate("/dashboard/filter");
+            navigate(`/dashboard/filter/${filterName}`);
         }
     }
 
@@ -35,14 +35,14 @@ function Sidebar(){
                         <div className="list-group list-group-flush"> 
                             <div type="button" onClick={()=>{handleAllFiles("AllFiles")}} className="list-group-item py-1"><i className="bx bx-folder me-2"></i><span>All Files</span></div>
                             {/* <a href="#" className="list-group-item py-1"><i className="bx bx-analyse me-2"></i><span>Recents</span></a> */}
-                            <div type="button" onClick={()=>{handleAllFiles("AllDocs")}} className="list-group-item py-1"><i className="bx bx-file me-2"></i><span>Documents</span></div>
-                            <div type="button" onClick={()=>{handleAllFiles("AllImage")}} className="list-group-item py-1"><i className="bx bx-image me-2"></i><span>Images</span></div>
+                            <div type="button" onClick={()=>{handleAllFiles("All Docs")}} className="list-group-item py-1"><i className="bx bx-file me-2"></i><span>Documents</span></div>
+                            <div type="button" onClick={()=>{handleAllFiles("All Image")}} className="list-group-item py-1"><i className="bx bx-image me-2"></i><span>Images</span></div>
                             {/* <div type="button" className="list-group-item py-1"><i className="bx bx-video me-2"></i><span>Videos</span></div> */}
                             {/* <div type="button" className="list-group-item py-1"><i className="bx bx-music me-2"></i><span>Audio</span></div> */}
                             {/* <div type="button" className="list-group-item py-1"><i className="bx bx-beer me-2"></i><span>Zip Files</span></div> */}
                             {/* <div type="button" className="list-group-item py-1"><i className="bx bx-plug me-2"></i><span>Important</span></div> */}
                             <div type="button" onClick={()=>{navigate("/settings")}} className="list-group-item py-1"><i className="bx bx-cog me-2"></i><span>Settings</span></div>
-                            <div type="button" className="list-group-item py-1"><i className="bx bx-trash-alt me-2"></i><span>Deleted Files</span></div>
+                            <div type="button" onClick={()=>{handleAllFiles("Deleted Files")}} className="list-group-item py-1"><i className="bx bx-trash-alt me-2"></i><span>Deleted Files</span></div>
                         </div>
                     </div>
                 </div>

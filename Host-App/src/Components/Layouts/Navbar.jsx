@@ -9,9 +9,10 @@ const NavbarComponent =()=>{
     
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useSelector((state) =>({
+  const { isAuthenticated, user ,darkMode} = useSelector((state) =>({
     isAuthenticated : state.auth.isAuthenticated ,
     user : state.auth.user,
+    darkMode: state.Settings.darkMode,
   }));
   const handleToDashboard =()=>{
     dispatch(changeFolder("root"));
@@ -21,9 +22,9 @@ const NavbarComponent =()=>{
   //   dispatch(signOutUser());
   //   navigate("/dashboard");
   // }
-  
+  const theme = darkMode ? "dark" : "light";
   return (
-    <Navbar bg="white" expand="lg" variant="light"className="border-bottom py-3 shadow-sm">
+    <Navbar data-bs-theme={theme}  expand="lg" className="border-bottom py-3 shadow-sm">
         <Navbar.Brand style={{ marginLeft: "60px", marginRight: "auto" }} >
           File Management System
         </Navbar.Brand>

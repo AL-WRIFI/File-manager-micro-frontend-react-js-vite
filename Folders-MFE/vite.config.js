@@ -11,6 +11,7 @@ export default defineConfig({
       filename: 'remoteEntry.js',
       remotes: {
         HostApp: "http://localhost:5001/assets/remoteEntry.js",
+        Shared: "http://localhost:5007/assets/remoteEntry.js"
       },
       exposes: {
         './actions': './src/Components/Actions/actionCreators/ExportAction',

@@ -6,6 +6,7 @@ import { createFile } from "./CreateFile";
 
 
 export const pasteFile = (docId , data) => async (dispatch) => {
+    console.log("fcjhfgvgh");
     try{
        await dispatch(createFile(data));
     }catch (error){
@@ -13,7 +14,7 @@ export const pasteFile = (docId , data) => async (dispatch) => {
     }
 }
 
-
+export default pasteFile;
 // export const pasteFile=(docId,data)=> async (dispatch)=>{
 //     const file = await fire.firestore().collection('files').doc(data).get();
 

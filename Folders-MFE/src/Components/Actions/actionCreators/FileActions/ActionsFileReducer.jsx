@@ -28,9 +28,21 @@ export const addFile= (payload)=>({
     type: types.MOVE_FILE,
     payload,
   });
+
+  export const changeFile = (payload) => ({
+    type: types.CHANGE_FILE,
+    payload,
+  });
   
   export const renameFile = (name , docId) => ({
     type: types.RENAME_FILE,
     payload : {name : name , docId : docId},
   });
+
+  export const addToDeletedFiles = (payload) => {
+    return{
+      type: types.ADD_TO_DELETED_FILES,
+      payload
+    }
+  }
   

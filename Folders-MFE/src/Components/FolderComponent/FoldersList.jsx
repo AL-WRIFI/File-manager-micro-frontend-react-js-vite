@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { shallowEqual, useSelector } from "react-redux";
-import ShowItems from "./ShowItems";
+import ShowItems from "Shared/ShowItems";
 
 
 const FoldersList=()=>{

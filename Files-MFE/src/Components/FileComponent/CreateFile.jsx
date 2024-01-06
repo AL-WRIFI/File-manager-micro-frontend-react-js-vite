@@ -63,6 +63,7 @@ const CreateFile = () => {
     extent: extention ? fileName.split(".").pop() : "txt",
     data: "",
     url: "",
+    show:true
   }
 
   try {

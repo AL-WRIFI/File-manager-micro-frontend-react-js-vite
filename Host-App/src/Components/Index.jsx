@@ -5,9 +5,8 @@ import { faAlignRight, faCircleArrowRight, faPaste } from "@fortawesome/free-sol
 import { goBack } from "../Redux/actionCreators/FolderActions/ActionsFolderReducer";
 import { Outlet } from "react-router";
 import Sidebar from "./Layouts/Sidebar";
-
-
-import { MoveFile,pasteFile,pasetFolder,MoveFolder } from "Folders_MFE/actions"; 
+import pasteFile from "Files_MFE/pasteFile"
+import { MoveFile,pasetFolder,MoveFolder } from "Folders_MFE/actions"; 
 const CreateFile   = lazy (()=> import("Files_MFE/CreateFile")); 
 const UploadFile   = lazy (()=> import("Files_MFE/UploadFile"));
 const CreateFolder = lazy (()=> import("Folders_MFE/CreateFolder")); 

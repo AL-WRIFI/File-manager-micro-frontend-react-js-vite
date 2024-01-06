@@ -40,3 +40,10 @@ export const renameFolder = (name , docId) => ({
 export const goBack = () => ({
   type: types.GO_BACK,
 });
+
+export const addToDeletedFolders = (payload) => {
+  return{
+    type: types.ADD_TO_DELETED_FOLDERS,
+    payload
+  }
+}

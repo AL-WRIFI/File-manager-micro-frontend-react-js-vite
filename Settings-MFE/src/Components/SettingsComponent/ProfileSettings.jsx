@@ -1,23 +1,105 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { reauthenticateWithCredential } from 'firebase/auth';
+import { EmailAuthProvider } from 'firebase/auth';
+
+import fire from "Auth_MFE/fire";
+
 
 function ProfileSettings(){
+    const auth = fire.auth();
+    const { uid , email , displayName } = useSelector( state => state.auth.user);
+    const [fullName, setFullName] = useState(displayName);
+    const [newEmail, setEmail] = useState(email);
+    const dispatch = useDispatch();
 
-  
+    const loginUser = (payload)=>{
+        return{
+          type: "USER_LOGIN",
+          payload
+        }
+      };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+              if(displayName !== fullName){
+                updateName(fullName);
+              }else if(email !== newEmail){
+                updateEmaill(newEmail);
+              }else { return }
+
+        } catch (error) {
+          toast.error("Error updateing information");
+          console.log(error);
+        }
+     };
+
+     
+
+     const updateEmaill = (newEmail) => {
+      console.log(auth.currentUser.password);
+      try{
+        fire.auth().currentUser.updateEmail(newEmail).then(() => {
+          dispatch(loginUser({
+            uid: uid,
+            email: newEmail,
+            displayName: name,
+          }));
+          toast.success("Email Updated successfully",);
+        }).catch((error)=>{
+          toast.error("Error updateing Email");
+          console.log(error)
+        });
+      //   reauthenticateWithCredential(auth.currentUser, EmailAuthProvider.credential(email, auth.currentUser.getIdToken())).then(() => {
+      //     auth.currentUser.updateEmail(newEmail).then(() => {
+      //       toast.success("Email Updated successfully");
+      //       console.log('تم تغيير عنوان البريد الإلكتروني بنجاح.');
+      //     })
+      //     .catch((error) => {
+      //       toast.error("Error updateing Email");
+      //       console.error('حدث خطأ أثناء تحديث عنوان البريد الإلكتروني:', error.message);
+      //     });
+      // })
+      // .catch((error) => {
+      //   console.error('فشلت عملية إعادة التحقق:', error.message);
+      // }); 
+      }catch(error){
+        toast.error("Error updateing Email");
+        console.log(error)
+      }
+    };
+
+
+    const updateName = (name) => {
+      auth.currentUser.updateProfile({ displayName:name}).then(()=>{
+        dispatch(loginUser({
+            uid: uid,
+            email: newEmail,
+            displayName: fullName,
+          }));
+        toast.success("Name Updated successfully",);
+      }).catch((error)=>{
+      toast.error("Error updateing Name"); 
+      console.log(error)})
+    };
+
     return(
         <Fragment>
-          {/* <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" /> */}
           <div className="tab-pane fade show active" id="profile">
             <h6>YOUR PROFILE INFORMATION</h6>
-                <form>
+                <form  >
                     <div className="row">
                         <div className="col-md-8">
                             <div className="mb-3">
-                                <label for="inputUsername" className="form-label">Username</label>
-                                <input type="text" className="form-control" id="inputUsername" placeholder="Username"/>
+                                <label htmlFor="inputUsername" className="form-label">Name</label>
+                                <input onChange={(e) => setFullName(e.target.value)} type="text" className="form-control" id="inputUsername" placeholder="Name" value={fullName} />
                             </div>
                             <div className="mb-3">
-                                <label for="inputBio" className="form-label">Biography</label>
-                                <textarea rows="2" className="form-control" id="inputBio" placeholder="Tell something about yourself"></textarea>
+                                <label htmlFor="inputUsername" className="form-label">Email</label>
+                                <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="inputUsername" placeholder="Email" value={newEmail} />
                             </div>
                         </div>
                         <div className="col-md-4">
@@ -31,7 +113,7 @@ function ProfileSettings(){
                         </div>
                     </div>
 
-                    <button type="button" className="btn btn-primary">Update Profile</button>
+                    <button onClick={handleSubmit} type="button" className="btn btn-primary">Update Profile</button>
                     <button type="reset" className="btn btn-light">Reset Changes</button>
                 </form>
               
@@ -41,113 +123,3 @@ function ProfileSettings(){
 }
 
 export default ProfileSettings;
-
-
-// import React, { Fragment, useState } from "react";
-// import firebase from "firebase/app";
-// import "firebase/auth";
-// import "firebase/firestore";
-// import firebaseConfig from "./firebaseConfig"; 
-
-// if (!firebase.apps.length) {
-//   firebase.initializeApp(firebaseConfig);
-// }
-
-// function ProfileSettings() {
-//   const [fullName, setFullName] = useState("Kenneth Valdez");
-//   const [email, setEmail] = useState("kenneth.valdez@example.com");
-//   const [location, setLocation] = useState("Bay Area, San Francisco, CA");
-
-//   const updateProfile = async () => {
-//     try {
-//       const user = firebase.auth().currentUser;
-
-//       if (user) {
-//         await user.updateProfile({
-//           displayName: fullName,
-//         });
-
-//         await user.updateEmail(email);
-
-//         // يمكنك أيضًا إضافة تحديثات إضافية حسب الحاجة
-//       }
-
-//       console.log("Profile updated successfully!");
-//     } catch (error) {
-//       console.error("Error updating profile:", error.message);
-//     }
-//   };
-
-//   const resetChanges = () => {
-//     // إعادة تعيين القيم إلى القيم الافتراضية أو استعادتها من قاعدة البيانات إذا كانت مفيدة
-//     setFullName("Kenneth Valdez");
-//     setEmail("kenneth.valdez@example.com");
-//     setLocation("Bay Area, San Francisco, CA");
-//   };
-
-//   return (
-//     <Fragment>
-//       <div className="tab-pane fade show active" id="profile">
-//         <h6>YOUR PROFILE INFORMATION</h6>
-//         <hr />
-//         <form>
-//           {/* ... الرمز الحالي ... */}
-//           <div className="form-group">
-//             <label htmlFor="fullName">Full Name</label>
-//             <input
-//               type="text"
-//               className="form-control"
-//               id="fullName"
-//               aria-describedby="fullNameHelp"
-//               placeholder="Enter your fullname"
-//               value={fullName}
-//               onChange={(e) => setFullName(e.target.value)}
-//             />
-//             <small id="fullNameHelp" className="form-text text-muted">
-//               You can change or remove it at any time.
-//             </small>
-//           </div>
-//           <div className="form-group">
-//             <label htmlFor="email">Email</label>
-//             <input
-//               type="email"
-//               className="form-control"
-//               id="email"
-//               aria-describedby="emailHelp"
-//               placeholder="Enter your email"
-//               value={email}
-//               onChange={(e) => setEmail(e.target.value)}
-//             />
-//             <small id="emailHelp" className="form-text text-muted">
-//               You can change your email at any time.
-//             </small>
-//           </div>
-//           <div className="form-group">
-//             <label htmlFor="location">Location</label>
-//             <input
-//               type="text"
-//               className="form-control"
-//               id="location"
-//               placeholder="Enter your location"
-//               value={location}
-//               onChange={(e) => setLocation(e.target.value)}
-//             />
-//           </div>
-//           {/* ... الرمز الحالي ... */}
-//           <button
-//             type="button"
-//             className="btn btn-primary"
-//             onClick={updateProfile}
-//           >
-//             Update Profile
-//           </button>
-//           <button type="button" className="btn btn-light" onClick={resetChanges}>
-//             Reset Changes
-//           </button>
-//         </form>
-//       </div>
-//     </Fragment>
-//   );
-// }
-
-// export default ProfileSettings;

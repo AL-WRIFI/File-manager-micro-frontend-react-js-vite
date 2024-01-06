@@ -1,55 +1,61 @@
 import { toast } from "react-toastify";
 import fire from "../../../../config/firebase";
-import { removeFolder } from "./ActionsFolderReducer";
+import { addToDeletedFolders, removeFolder } from "./ActionsFolderReducer";
 import { removeFromParentSubFolders } from "../SharedActions/SharedActions";
 
 
 export const deleteFolderAndSubfolders = (folder) => async (dispatch) => {
   const DB = fire.firestore();
   const folderId = folder.docId;
-console.log("#####FOLDER MFE AC");
-  const deleteFolder = async (folderRef, batch) => {
-    try {
-      const snapshot = await folderRef.get();
-      if (snapshot.exists) {
+  DB.collection("folders").doc(folderId).update({
+    show:false
+  }).then(()=>{
+    dispatch(removeFolder(folderId));
+    dispatch(addToDeletedFolders(folder))
+    toast.success('Folder Deleted successfully!');
+  })
+  // const deleteFolder = async (folderRef, batch) => {
+  //   try {
+  //     const snapshot = await folderRef.get();
+  //     if (snapshot.exists) {
         
-        const subFiles = await snapshot.data().subFiles || [];
+  //       const subFiles = await snapshot.data().subFiles || [];
        
-        subFiles.forEach(async (file) => {
-          await DB.collection('files').doc(file).delete();
-        });
+  //       subFiles.forEach(async (file) => {
+  //         await DB.collection('files').doc(file).delete();
+  //       });
   
         
-        const subfoldersArray = snapshot.data().subFolders || [];
+  //       const subfoldersArray = snapshot.data().subFolders || [];
         
-        subfoldersArray.forEach(async (subfolderId) => {
-          const subfolderRef = DB.collection('folders').doc(subfolderId);
-          const subfolderBatch = DB.batch();
-          await deleteFolder(subfolderRef, subfolderBatch);
-          await subfolderBatch.commit();
-          await dispatch(removeFolder(subfolderId));
-        });
+  //       subfoldersArray.forEach(async (subfolderId) => {
+  //         const subfolderRef = DB.collection('folders').doc(subfolderId);
+  //         const subfolderBatch = DB.batch();
+  //         await deleteFolder(subfolderRef, subfolderBatch);
+  //         await subfolderBatch.commit();
+  //         await dispatch(removeFolder(subfolderId));
+  //       });
 
-        batch.delete(folderRef);
-      }
-    } catch (error) {
-      console.error('حدث خطأ: ', error.message);
-      throw error;
-    }
-  };
+  //       batch.delete(folderRef);
+  //     }
+  //   } catch (error) {
+  //     console.error('حدث خطأ: ', error.message);
+  //     throw error;
+  //   }
+  // };
 
-  const folderRef = DB.collection('folders').doc(folderId);
-  const mainBatch = DB.batch();
+  // const folderRef = DB.collection('folders').doc(folderId);
+  // const mainBatch = DB.batch();
 
-  try {
-    await deleteFolder(folderRef, mainBatch);
-    await mainBatch.commit();
-    await removeFromParentSubFolders(folderId ,folder.data.parent)
-    await dispatch(removeFolder(folderId));
-    toast.success('Folder Deleted successfully!');
-  } catch (error) {
-    console.error('حدث خطأ أثناء حذف المجلد: ', error.message);
-  }
+  // try {
+  //   await deleteFolder(folderRef, mainBatch);
+  //   await mainBatch.commit();
+  //   await removeFromParentSubFolders(folderId ,folder.data.parent)
+  //   await dispatch(removeFolder(folderId));
+  //   toast.success('Folder Deleted successfully!');
+  // } catch (error) {
+  //   console.error('حدث خطأ أثناء حذف المجلد: ', error.message);
+  // }
 };
 
 

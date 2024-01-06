@@ -10,8 +10,10 @@ import { gitFiles } from "./Redux/actionCreators/FileActions/GetFiles";
 import NavbarComponent from './Components/Layouts/Navbar';
 import Dashboard from './Components/Dashboard';
 import Index from "./Components/Index";
+import { changeTheme  } from "./Redux/actionCreators/AccountActions";
+
 // import InfoFile from './components/Dashboard/infoFile';
-// const FileComponent = lazy (()=> import("Files_MFE/FileComponent")); 
+const FileComponent = lazy (()=> import("Files_MFE/FileComponent")); 
 const FoldersList = lazy (()=> import("Folders_MFE/FoldersList"));
 const FilterPage = lazy (()=> import("Shared/FilterPage")); 
 const Register = lazy (()=> import("Auth_MFE/Register")); 
@@ -24,9 +26,11 @@ function App() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isAuthenticated , userId } = useSelector((state) =>({ 
+  const { isAuthenticated , userId , darkMode } = useSelector((state) =>({ 
       isAuthenticated : state.auth.isAuthenticated ,
       userId: state.auth.user.uid,
+      darkMode: state.Settings.darkMode,
+      preferredColor: state.Settings.preferredColor,
   }),shallowEqual);
 
   useEffect(()=>{
@@ -39,26 +43,23 @@ function App() {
       }
   },[isAuthenticated]);
 
-  const [darkMode, setDarkMode] = useState(false);
+  const theme = darkMode ? "dark" : "light";
   return (
     
     <Fragment>
       
       
-    <div className={darkMode ? "dark-mode" : "light-mode"}>
+    <div data-bs-theme={theme}>
       <div className="container1">
         <span style={{ color: darkMode ? "grey" : "yellow" }}>☀︎</span>
         <div className="switch-checkbox">
           <label className="switch">
-            <input type="checkbox" onChange={() => setDarkMode(!darkMode)} />
+            <input type="checkbox" onChange={() => dispatch(changeTheme())} />
             <span className="slider round"> </span>
           </label>
         </div>
         <span style={{ color: darkMode ? "#c96dfd" : "grey" }}>☽</span>
       </div>
-      {/* <div>
-        <h1>Cool its {darkMode ? "Dark" : "Light"} Mode </h1>
-      </div> */}
       <NavbarComponent/>
       <ToastContainer/>
       <Routes>
@@ -69,14 +70,12 @@ function App() {
         <Route  path="/dashboard" element={<Dashboard />}>
             <Route  path='' element={<Index />} >
               <Route  path='' element={<Suspense fallback={<div>Loding....</div>}><FoldersList/></Suspense>}/>
-              <Route  path="filter" element={<Suspense><FilterPage /></Suspense>}/>
+              <Route  path="filter/:filterName" element={<Suspense><FilterPage /></Suspense>}/>
               {/* <Route  path="folder/:folderId" element={<FolderComponent />}/> */}
-              {/* <Route  path="file/:fileId" element={<Suspense><FileComponent /></Suspense>}/>     */}
+              <Route  path="file/:fileId" element={<Suspense><FileComponent/></Suspense>}/>    
           </Route>
         </Route>       
       </Routes>
-
-
     </div>
       
     </Fragment>
