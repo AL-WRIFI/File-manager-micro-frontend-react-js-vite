@@ -4,7 +4,6 @@ import fire from "../../../../config/firebase";
 
 
 export const createFile = (data) =>(dispatch)=>{
-     console.log("dfcdefdfcffff22222222222");
     fire.firestore().collection('files').add(data).then( async file =>{
       const fileData = await (await file.get()).data();
       const fileId = file.id;

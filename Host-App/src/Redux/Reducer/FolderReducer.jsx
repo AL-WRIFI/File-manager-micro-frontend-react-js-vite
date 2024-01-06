@@ -74,7 +74,7 @@ const FolderReducer = ( state=initialState,action) =>{
             deletedFolder.data.show = false;
             return{
                 ...state,
-                userDeletedFiles:[...state.userDeletedFolders,deletedFolder]
+                userDeletedFolders:[...state.userDeletedFolders,deletedFolder]
             }
        default: return state;
     }

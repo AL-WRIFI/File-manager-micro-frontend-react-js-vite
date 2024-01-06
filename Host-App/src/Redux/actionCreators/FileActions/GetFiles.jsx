@@ -12,7 +12,6 @@ export const gitFiles = (userId) => (dispatch)=>{
           data: file.data(),
           docId: file.id,
         })); 
-        console.log(fileData);
         // dispatch(setLoading(false)); 
         dispatch(addFiles(fileData));
       });

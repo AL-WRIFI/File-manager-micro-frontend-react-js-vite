@@ -18,7 +18,7 @@ function ShowItems({title , items}){
     const handleDoubleClick= (item)=>{
      if(item.data.type === "folder"){
         dispatch(changeFolder(item.docId));
-        navigate(`/dashboard/folder/${item.docId}`);
+        // navigate(`/dashboard/folder/${item.docId}`);
      }else{
         dispatch(changeFile(item.docId));
         navigate(`/dashboard/file/${item.docId}`);
