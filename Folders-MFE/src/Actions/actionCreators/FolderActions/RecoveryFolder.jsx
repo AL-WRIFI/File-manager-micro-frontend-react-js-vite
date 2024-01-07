@@ -1,10 +1,11 @@
 import fire from "../../../config/firebase"
+import { recoveryFolders } from "./ActionsFolderReducer";
 import { addFolder } from "./ActionsFolderReducer";
 
 export const recoveryFolder = (folder) =>(dispatch) =>{
     fire.firestore().collection("folders").doc(folder.docId).update({
         show:true,
     }).then(async ()=>{
-       await dispatch(addFolder(folder));
+       await dispatch(recoveryFolders(folder));
     })
 }

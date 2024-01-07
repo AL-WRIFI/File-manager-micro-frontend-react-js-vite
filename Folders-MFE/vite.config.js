@@ -10,7 +10,7 @@ export default defineConfig({
       name: 'foldres_mfe',
       filename: 'remoteEntry.js',
       remotes: {
-        HostApp: "http://localhost:5001/assets/remoteEntry.js",
+        // HostApp: "http://localhost:5001/assets/remoteEntry.js",
         Shared: "http://localhost:5007/assets/remoteEntry.js",
         Files_MFE: "http://localhost:5003/assets/remoteEntry.js"
       },

@@ -22,7 +22,7 @@ const FolderReducer = ( state=initialState,action) =>{
         return{
             ...state,
             userFolders: showTrueFolders,
-            userDeletedFolders:showFalseFolders,
+            userDeletedFolders: showFalseFolders,
         };
        case types.SET_LOADING:
         return{
@@ -79,6 +79,16 @@ const FolderReducer = ( state=initialState,action) =>{
             ...state,
             userDeletedFolders:[...state.userDeletedFolders,deletedFolder]
         }
+        case types.RECOVERY_FOLDER:
+            const recoveryFolder = action.payload;
+            recoveryFolder.data.show = true;
+            const deletedFolders = state.userDeletedFolders.filter(
+                (folder) => folder.docId !== action.payload.docId )
+            return{
+                ...state,
+                userFolders: [...state.userFolders,recoveryFolder],
+                userDeletedFolders: deletedFolders
+            }
        default: return state;
     }
 };

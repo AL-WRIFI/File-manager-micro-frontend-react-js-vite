@@ -7,7 +7,6 @@ const initialState = {
     userDeletedFiles:[],
 }
 
-
 const FileReducer = ( state=initialState,action) =>{
     switch(action.type){
         case types.SET_LOADING:
@@ -31,7 +30,7 @@ const FileReducer = ( state=initialState,action) =>{
         case types.CHANGE_FILE:   
             return{
                 ...state,
-                currentFolder: action.payload,
+                currentFiles: action.payload,
             };
         case types.RENAME_FILE:
             const renamedFile = state.userFiles.find( (file) => file.docId === action.payload.docId);
@@ -67,6 +66,17 @@ const FileReducer = ( state=initialState,action) =>{
             return{
                 ...state,
                 userDeletedFiles:[...state.userDeletedFiles,deletedFile]
+            }
+
+        case types.RECOVERY_FILE:
+            const recoveryFiles = action.payload;
+            recoveryFiles.data.show = true;
+            const deletedFiles = state.userDeletedFiles.filter(
+                (Files) => Files.docId !== action.payload.docId )
+            return{
+                ...state,
+                userFiles: [...state.userFiles,recoveryFiles],
+                userDeletedFiles: deletedFiles
             }
         case types.SET_FILE_DATA:
             const { fileId, data } = action.payload;

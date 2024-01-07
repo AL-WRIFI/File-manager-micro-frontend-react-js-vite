@@ -10,7 +10,7 @@ export default defineConfig({
       name: 'files_mfe',
       filename: 'remoteEntry.js',
       remotes: {
-        HostApp: "http://localhost:5001/assets/remoteEntry.js",
+        // HostApp: "http://localhost:5001/assets/remoteEntry.js",
       },
       exposes: {
         './FileComponent':'./src/Components/FileComponent/FileComponent',

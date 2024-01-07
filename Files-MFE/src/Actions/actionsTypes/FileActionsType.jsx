@@ -18,4 +18,5 @@ export const CLEAR_BUFFER = 'CLEAR_BUFFER';
 export const SET_LOADING = 'SET_LOADING';
 export const CHANGE_FILE = 'CHANGE_FILE';
 export const ADD_TO_DELETED_FILES = 'ADD_TO_DELETED_FILES';
+export const RECOVERY_FILE = 'RECOVERY_FILE';
 // export const RECOVERY_FILE = 'RECOVERY_FILE';

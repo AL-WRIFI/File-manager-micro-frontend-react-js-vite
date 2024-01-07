@@ -43,7 +43,6 @@ function DropdownItems({item}) {
                     <li><a onClick={handleCut}className="dropdown-item" ><FontAwesomeIcon icon={faScissors} />&nbsp;Cut</a></li>
                     <li><a onClick={handleDelete}className="dropdown-item"><FontAwesomeIcon icon={faTrashCan} />&nbsp;Delete</a></li>
                     {!item.data.show ?<li><a onClick={handleRecovery} className="dropdown-item"><FontAwesomeIcon icon={faArrowRotateRight} />&nbsp;Recovery</a></li> : ""}
-
                     <li><a onClick={""}className="dropdown-item"><FontAwesomeIcon icon={faCircleInfo} />&nbsp;Info</a></li>
                     
                 </ul>

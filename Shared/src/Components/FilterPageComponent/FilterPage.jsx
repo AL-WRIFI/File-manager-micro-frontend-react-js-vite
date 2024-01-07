@@ -17,8 +17,6 @@ const FilterPage = () => {
           ...Object.values(state.Files.userDeletedFiles), 
           ...Object.values(state.Folders.userDeletedFolders)
         ];
-         
-        console.log(itemsToFilter);
       }
       return { 
         filterItems: itemsToFilter ,

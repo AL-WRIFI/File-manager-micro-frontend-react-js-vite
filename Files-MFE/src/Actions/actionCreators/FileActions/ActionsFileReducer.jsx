@@ -38,22 +38,21 @@ export const addFile= (payload)=>({
     type: types.CHANGE_FILE,
     payload,
   });
+
   export const addToDeletedFiles = (payload) => {
     return{
       type: types.ADD_TO_DELETED_FILES,
       payload
     }
   }
-
+  export const recoveryFiles = (payload) => {
+    return{
+      type: types.RECOVERY_FILE,
+      payload
+    }
+  }
   export const clearBuffer = () => ({
     type: types.CLEAR_BUFFER,
   });
 
-  
-  // export const recoveryFile = (payload) => {
-  //   return{
-  //     type: types.RECOVERY_FILE,
-  //     payload
-  //   }
-  // }
   
