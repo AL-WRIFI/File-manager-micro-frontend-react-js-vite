@@ -1,0 +1,321 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Files-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Files-MFE",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Auth-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Auth-MFE",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Folders-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Folders-MFE",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "lint",
+			"path": "Auth-MFE",
+			"problemMatcher": [],
+			"label": "npm: lint - Auth-MFE",
+			"detail": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "Auth-MFE",
+			"group": "build",
+			// "dependsOn": [
+			// 	"npm: install - Files-MFE",
+			// ],
+			"problemMatcher": [],
+			"label": "npm: install - Auth-MFE",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "Files-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install - Files-MFE",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "Folders-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install - Folders-MFE",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "Host-App",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install - Host-App",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "Server",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install - Server",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "Settings-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install - Settings-MFE",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "Shared",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install - Shared",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "store",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: install - Store",
+			"detail": "install dependencies from package"
+		},
+		{
+			"type": "shell",
+			// "script": "npm run dev",
+			"group": "build",
+			"dependsOn": [
+				"npm: install - Files-MFE",
+				"npm: install - Folders-MFE",
+				"npm: install - Server",
+				"npm: install - Auth-MFE",
+				"npm: install - Host-App",
+				"npm: install - Settings-MFE",
+				"npm: install - Shared",
+				"npm: install - Store",
+			  ],
+			"problemMatcher": [],
+			"label": "npm: install - All",
+			"detail": "install dependencies from package"
+		},
+//build
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Files-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Files-MFE",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Auth-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Auth-MFE",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Folders-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Folders-MFE",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Host-App",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Host-App",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Server",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Server",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Settings-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Settings-MFE",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "Shared",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Shared",
+			"detail": "vite build"
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"path": "store",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: build - Store",
+			"detail": "vite build"
+		},
+		{
+			"type": "shell",
+			// "script": "npm run dev",
+			"group": "build",
+			"dependsOn": [
+				"npm: build - Files-MFE",
+				"npm: build - Folders-MFE",
+				// "npm: build - Server",
+				"npm: build - Auth-MFE",
+				"npm: build - Host-App",
+				"npm: build - Settings-MFE",
+				"npm: build - Shared",
+				"npm: build - Store",
+			  ],
+			"problemMatcher": [],
+			"label": "npm: build - All",
+			"detail": "vite build"
+		},
+
+
+//start		
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "Files-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: serve - Files-MFE",
+			"detail": "vite preview --port 5003 --strictPort"
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "Auth-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: serve - Auth-MFE",
+			"detail": "vite preview --port 5005 --strictPort"
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "Folders-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: serve - Folders-MFE",
+			"detail": "vite preview --port 5002 --strictPort"
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "Host-App",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: serve - Host-App",
+			"detail": "vite preview --port 5001 --strictPort"
+		},
+		{
+			"type": "npm",
+			"script": "start",
+			"path": "Server",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: start - Server",
+			"detail": "vite start"
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "Settings-MFE",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: serve - Settings-MFE",
+			"detail": "vite preview --port 5006 --strictPort"
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "Shared",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: serve - Shared",
+			"detail": "vite preview --port 5007 --strictPort"
+		},
+		{
+			"type": "npm",
+			"script": "serve",
+			"path": "store",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: serve - Store",
+			"detail": "vite preview --port 5010 --strictPort"
+		},
+		{
+			"type": "shell",
+			// "script": "npm run dev",
+			"group": "build",
+			"dependsOn": [
+				"npm: serve - Files-MFE",
+				"npm: serve - Folders-MFE",
+				"npm: start - Server",
+				"npm: serve - Auth-MFE",
+				"npm: serve - Shared",
+				"npm: serve - Settings-MFE",
+				"npm: serve - Store",
+				"npm: serve - Host-App",
+			  ],
+			"problemMatcher": [],
+			"label": "npm: serve - All",
+			"detail": "vite serve"
+		},
+	]
+}
