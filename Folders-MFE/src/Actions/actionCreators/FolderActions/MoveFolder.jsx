@@ -1,7 +1,7 @@
-import { toast } from "react-toastify";
-import fire from "../../../config/firebase";
-import { addToParentSubFolders, removeFromParentSubFolders } from "../SharedActions/SharedActions";
 import { moveFolder } from "./ActionsFolderReducer";
+import {  addToParentSubFolders, removeFromParentSubFolders  } from "Shared/SharedActions"
+import fire from "../../../config/firebase";
+import { toast } from "react-toastify";
 
 
 

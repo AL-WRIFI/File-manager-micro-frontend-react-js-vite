@@ -12,12 +12,10 @@ const Dashboard =()=>{
     checkIsLoggedin();
   },[])
   
-    return(
-      
+    return(   
         <Fragment>
           <Outlet/>
         </Fragment>
-     
     );
 }
 export default Dashboard

@@ -1,6 +1,6 @@
 import fire from "../../../config/firebase";
 import { addFile } from "./ActionsFileReducer";
-import {addToParentSubFiles} from "../SharedActions/SharedActions"
+import { addToParentSubFiles } from "Shared/SharedActions"
 
 
 

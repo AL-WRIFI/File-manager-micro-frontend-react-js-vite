@@ -1,4 +1,4 @@
-import fire from "../../../config/firebase";
+import fire from "../config/firebase";
 
 
 export const addToParentSubFiles = async (fileId,parentId) =>{

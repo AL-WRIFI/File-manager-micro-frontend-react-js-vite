@@ -1,4 +1,4 @@
-import { addToParentSubFolders } from "../SharedActions/SharedActions"
+import { addToParentSubFolders } from "Shared/SharedActions"
 import fire from "../../../config/firebase";
 import { addFolder } from "./ActionsFolderReducer";
 

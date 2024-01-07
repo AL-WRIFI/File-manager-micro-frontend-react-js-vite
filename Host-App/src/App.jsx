@@ -4,21 +4,21 @@ import { ToastContainer} from 'react-toastify';
 import { Fragment ,lazy,Suspense,useEffect} from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useSelector ,shallowEqual, useDispatch} from "react-redux";
-import { gitFolders } from "./Redux/actionCreators/FolderActions/GetFolders";
-import { gitFiles } from "./Redux/actionCreators/FileActions/GetFiles";
-// import Settings from './Components/Settings/Settings';
+import Index from "./Components/Index";
 import NavbarComponent from './Components/Layouts/Navbar';
 import Dashboard from './Components/Dashboard';
-import Index from "./Components/Index";
 import { changeTheme  } from "./Redux/actionCreators/AccountActions";
 
-// import InfoFile from './components/Dashboard/infoFile';
+import { gitFolders } from "Folders_MFE/actions";
+import { gitFiles } from "Files_MFE/actions";
+
 const FileComponent = lazy (()=> import("Files_MFE/FileComponent")); 
 const FoldersList = lazy (()=> import("Folders_MFE/FoldersList"));
 const FilterPage = lazy (()=> import("Shared/FilterPage")); 
 const Register = lazy (()=> import("Auth_MFE/Register")); 
 const Login = lazy (()=> import("Auth_MFE/Login")); 
 const Settings = lazy (()=> import("Settings_MFE/settings")); 
+
 import "./App.css";
 function App() {
 

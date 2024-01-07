@@ -1,8 +1,7 @@
 import { toast } from "react-toastify";
 import fire from "../../../config/firebase";
 import { removeFile } from "./ActionsFileReducer";
-import { removeFromParentSubFiles } from "../SharedActions/SharedActions";
-
+import { removeFromParentSubFiles } from "Shared/SharedActions"
 
 
 export const deleteFile = (file) => async (dispatch) => {

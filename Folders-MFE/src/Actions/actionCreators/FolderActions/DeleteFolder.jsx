@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 import fire from "../../../config/firebase";
 import { removeFolder } from "./ActionsFolderReducer";
-import { removeFromParentSubFolders } from "../SharedActions/SharedActions";
+import { removeFromParentSubFolders } from "Shared/SharedActions"
 
 
 export const deleteFolder = (folder) => async (dispatch) => {
