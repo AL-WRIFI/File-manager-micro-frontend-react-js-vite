@@ -1,6 +1,7 @@
 import { Fragment, useState, useEffect } from "react";
 import fire from "Auth_MFE/fire";
 import { useSelector } from "react-redux";
+import '../../index.css'
 // import { doc, updateDoc } from "firebase/firestore";
 function AccountSettings(){
 
@@ -12,6 +13,7 @@ function AccountSettings(){
 
     return(
         <Fragment>
+              
               <div className="tab-pane fade" id="account">
               <h6>ACCOUNT SETTINGS</h6>
                     <hr />

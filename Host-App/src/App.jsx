@@ -20,7 +20,6 @@ const Register = lazy (()=> import("Auth_MFE/Register"));
 const Login = lazy (()=> import("Auth_MFE/Login")); 
 const Settings = lazy (()=> import("Settings_MFE/settings")); 
 import "./App.css";
-import { useState } from 'react';
 function App() {
 
   const navigate = useNavigate();
@@ -46,10 +45,8 @@ function App() {
   const theme = darkMode ? "dark" : "light";
   return (
     
-    <Fragment>
-      
-      
-    <div data-bs-theme={theme}>
+    <Fragment> 
+    <div  style={{ backgroundColor: darkMode ? "#181a1b" : "white" }} >
       <div className="container1">
         <span style={{ color: darkMode ? "grey" : "yellow" }}>☀︎</span>
         <div className="switch-checkbox">
@@ -60,10 +57,12 @@ function App() {
         </div>
         <span style={{ color: darkMode ? "#c96dfd" : "grey" }}>☽</span>
       </div>
+      <div data-bs-theme={theme} >
       <NavbarComponent/>
       <ToastContainer/>
       <Routes>
         <Route  path="settings" element={<Suspense> <Settings/> </Suspense>}/>
+        {/* <Route  path="profile" element={ <Settings/> }> */}
         <Route  path="/login" element={ <Suspense> <Login/> </Suspense>} />
         <Route  path="/signup" element={ <Suspense> <Register/> </Suspense>} />
         <Route  path="/" element={<Dashboard />}/>
@@ -76,6 +75,7 @@ function App() {
           </Route>
         </Route>       
       </Routes>
+      </div>
     </div>
       
     </Fragment>

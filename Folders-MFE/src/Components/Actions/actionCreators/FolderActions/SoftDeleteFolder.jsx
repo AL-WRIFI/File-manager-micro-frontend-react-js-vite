@@ -1,10 +1,9 @@
 import { toast } from "react-toastify";
 import fire from "../../../../config/firebase";
 import { addToDeletedFolders, removeFolder } from "./ActionsFolderReducer";
-import { removeFromParentSubFolders } from "../SharedActions/SharedActions";
 
 
-export const deleteFolder = (folder) => async (dispatch) => {
+export const softDeleteFolder = (folder) => async (dispatch) => {
   const DB = fire.firestore();
   const folderId = folder.docId;
   DB.collection("folders").doc(folderId).update({

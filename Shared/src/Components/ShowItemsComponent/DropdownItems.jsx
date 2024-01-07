@@ -1,8 +1,9 @@
 import { useDispatch } from 'react-redux';
-import { copyItemToBuffer ,deleteFile ,deleteFolderAndSubfolders} from "Folders_MFE/actions";
 import { faCopy, faScissors, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import Rename from '../ModalForms/Rename';
+import { copyItemToBuffer ,deleteFolder ,softDeleteFolder} from "Folders_MFE/actions";
+import { deleteFile ,softDeleteFile} from "Files_MFE/actions";
+import Rename from './Rename';
 function DropdownItems({item}) {
 
   const dispatch = useDispatch();
@@ -16,7 +17,11 @@ function DropdownItems({item}) {
   };
 
   const handleDelete = () => {
-    dispatch(item.data.type.startsWith('folder') ? deleteFolderAndSubfolders(item) : deleteFile(item));
+    if(item.data.show == true){
+      dispatch(item.data.type.startsWith('folder') ? softDeleteFolder(item) : softDeleteFile(item));
+    }else{
+      dispatch(item.data.type.startsWith('folder') ? deleteFolder(item) : deleteFile(item));
+    }
   };
 
   return (
@@ -30,6 +35,7 @@ function DropdownItems({item}) {
                     </svg>
                 </a>
                 <ul className="dropdown-menu dropdown-menu-end">
+                    <li><a className="dropdown-item" ><Rename item={item}/> </a></li>
                     <li><a onClick={handleCopy} className="dropdown-item" ><FontAwesomeIcon icon={faCopy} /> &nbsp;Copy</a></li>
                     <li><a onClick={handleCut}className="dropdown-item" ><FontAwesomeIcon icon={faScissors} />&nbsp;Cut</a></li>
                     <li><a onClick={handleDelete}className="dropdown-item"><FontAwesomeIcon icon={faTrashCan} />&nbsp;Delete</a></li>

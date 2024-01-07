@@ -38,3 +38,10 @@ export const addFile= (payload)=>({
     type: types.CHANGE_FILE,
     payload,
   });
+  export const addToDeletedFiles = (payload) => {
+    return{
+      type: types.ADD_TO_DELETED_FILES,
+      payload
+    }
+  }
+  

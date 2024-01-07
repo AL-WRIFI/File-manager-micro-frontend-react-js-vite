@@ -1,8 +1,10 @@
 export { changeFolder , copyItemToBuffer } from "./FolderActions.jsx";
-export { MoveFile } from "./FileActions/MoveFile";
-export  {pasteFile}  from "./FileActions/PasteFile";
 export { pasetFolder } from "./FolderActions/PasteFolder";
 export { MoveFolder } from "./FolderActions/MoveFolder";
 export { gitFolders } from "./FolderActions/GetFolders";
-export { deleteFolderAndSubfolders } from "./FolderActions/DeleteFolder";
-export { deleteFile } from './FileActions/DeleteFile';
+export { softDeleteFolder } from './FolderActions/SoftDeleteFolder';
+export { deleteFolder } from "./FolderActions/DeleteFolder";
+export { RenameFolder } from "./FolderActions/RenameFolder.jsx";
+
+
+

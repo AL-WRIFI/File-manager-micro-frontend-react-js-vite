@@ -97,6 +97,19 @@ input:checked + .slider:before {
 
 
 
+/* body{
+  font-size: var(--font-size);
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+} */
+
+/* #root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+} */
+
 
 
 

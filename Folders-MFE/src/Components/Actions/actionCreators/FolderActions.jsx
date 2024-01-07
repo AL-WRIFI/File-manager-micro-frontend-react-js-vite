@@ -1,7 +1,8 @@
 import * as types from "../actionsTypes/FolderActionsType";
 import fire from "../../../config/firebase";
 import { toast } from "react-toastify";
-import {addFile} from "./FileActions";
+
+
 
 // FOLDERS
 const addFolder = (payload) => ({
@@ -35,13 +36,12 @@ const moveFolder = (payload) => ({
   type: types.MOVE_FOLDER,
   payload,
 });
-const renameFolder = (payload) => ({
-  type: types.RENAME_FOLDER,
-  payload,
-});
+// const renameFolder = (payload) => ({
+//   type: types.RENAME_FOLDER,
+//   payload,
+// });
 
 // FOLDERS
-
 export const changeFolder = (folderId) => dispatch =>{
   dispatch(setChangeFolder(folderId));
 };
@@ -130,90 +130,90 @@ export const gitFolders = (userId) => (dispatch)=>{
 
 
 
-export const pasetActionFolder = (docId,data) => async (dispatch) => {
-  const DB = fire.firestore();
-  const sourceFolderId = docId;
+// export const pasetActionFolder = (docId,data) => async (dispatch) => {
+//   const DB = fire.firestore();
+//   const sourceFolderId = docId;
 
-  const copyFolder = async (sourceFolderRef, destinationParentId) => {
+//   const copyFolder = async (sourceFolderRef, destinationParentId) => {
 
-    const batch = DB.batch();
-    try {
-      const sourceSnapshot = await sourceFolderRef.get();
-      const folderData = sourceSnapshot.data();
-      //console.log(folderData);
-      if (sourceSnapshot.exists) {
-        const destinationFolderData = {
-          ...folderData,
-          parent: destinationParentId,
-        };
+//     const batch = DB.batch();
+//     try {
+//       const sourceSnapshot = await sourceFolderRef.get();
+//       const folderData = sourceSnapshot.data();
+//       //console.log(folderData);
+//       if (sourceSnapshot.exists) {
+//         const destinationFolderData = {
+//           ...folderData,
+//           parent: destinationParentId,
+//         };
 
-        const destinationFolderRef = await DB.collection('folders').add(destinationFolderData);
-        const destinationSnapshot = await destinationFolderRef.get();
-        const destinationData = destinationSnapshot.data();
-        dispatch(addFolder({ data:destinationData , docId:destinationFolderRef.id}));
-        const files = await DB.collection('files').where('parent', '==', sourceFolderRef.id).get();
-        files.forEach(async (file) => {
-         const isImage = file.data().type && file.data().type.startsWith('image');
-          if(isImage){
-          //   const sourceImageUrl = file.data().url; 
-          //   const imageBlob = await fetch(sourceImageUrl).then(response => response.blob());
+//         const destinationFolderRef = await DB.collection('folders').add(destinationFolderData);
+//         const destinationSnapshot = await destinationFolderRef.get();
+//         const destinationData = destinationSnapshot.data();
+//         dispatch(addFolder({ data:destinationData , docId:destinationFolderRef.id}));
+//         const files = await DB.collection('files').where('parent', '==', sourceFolderRef.id).get();
+//         files.forEach(async (file) => {
+//          const isImage = file.data().type && file.data().type.startsWith('image');
+//           if(isImage){
+//           //   const sourceImageUrl = file.data().url; 
+//           //   const imageBlob = await fetch(sourceImageUrl).then(response => response.blob());
   
-          //   const storageRef = fire.storage().ref();
-          //   const destinationImagePath = `files/${file.data().userId}/${file.data().name}`;
-          //   const destinationImageRef = storageRef.child(destinationImagePath);
-          //   await destinationImageRef.put(imageBlob);
-            const newFileData = {
-              ...file.data(),
-              // url : await destinationImageRef.getDownloadURL(),
-              parent: destinationFolderRef.id,
-            };
+//           //   const storageRef = fire.storage().ref();
+//           //   const destinationImagePath = `files/${file.data().userId}/${file.data().name}`;
+//           //   const destinationImageRef = storageRef.child(destinationImagePath);
+//           //   await destinationImageRef.put(imageBlob);
+//             const newFileData = {
+//               ...file.data(),
+//               // url : await destinationImageRef.getDownloadURL(),
+//               parent: destinationFolderRef.id,
+//             };
             
-            await DB.collection('files').add(newFileData);
-            const fullData = {
-              data : newFileData,
-              docId : file.id, 
-            }
-            await dispatch(addFile(fullData))
-          }else{
-            const newFileData = {
-              ...file.data(),
-              parent: destinationFolderRef.id,
-            };
+//             await DB.collection('files').add(newFileData);
+//             const fullData = {
+//               data : newFileData,
+//               docId : file.id, 
+//             }
+//             await dispatch(addFile(fullData))
+//           }else{
+//             const newFileData = {
+//               ...file.data(),
+//               parent: destinationFolderRef.id,
+//             };
             
-            await DB.collection('files').add(newFileData);
-            const fullData = {
-              data : newFileData,
-              docId : file.id, 
-            }
-            await dispatch(addFile(fullData))
-          }
+//             await DB.collection('files').add(newFileData);
+//             const fullData = {
+//               data : newFileData,
+//               docId : file.id, 
+//             }
+//             await dispatch(addFile(fullData))
+//           }
           
           
-        });
+//         });
 
-        const subfolders = await DB.collection('folders').where('parent', '==', sourceFolderRef.id).get();
-        subfolders.forEach(async (subfolder) => {
-          await copyFolder(DB.collection('folders').doc(subfolder.id), destinationFolderRef.id);
-        });
+//         const subfolders = await DB.collection('folders').where('parent', '==', sourceFolderRef.id).get();
+//         subfolders.forEach(async (subfolder) => {
+//           await copyFolder(DB.collection('folders').doc(subfolder.id), destinationFolderRef.id);
+//         });
 
         
-        await batch.commit();
-      }
-    } catch (error) {
-      console.error('حدث خطأ أثناء عملية النسخ: ', error.message);
-      throw error;
-    }
-  };
+//         await batch.commit();
+//       }
+//     } catch (error) {
+//       console.error('حدث خطأ أثناء عملية النسخ: ', error.message);
+//       throw error;
+//     }
+//   };
 
-  const sourceFolderRef = DB.collection('folders').doc(sourceFolderId);
+//   const sourceFolderRef = DB.collection('folders').doc(sourceFolderId);
 
-  try {
-    await copyFolder(sourceFolderRef,data.parent);
-    toast.success("Folder copied successfully!");
-  } catch (error) {
-    console.error('حدث خطأ أثناء عملية النسخ: ', error.message);
-  }
-};
+//   try {
+//     await copyFolder(sourceFolderRef,data.parent);
+//     toast.success("Folder copied successfully!");
+//   } catch (error) {
+//     console.error('حدث خطأ أثناء عملية النسخ: ', error.message);
+//   }
+// };
 
 
 

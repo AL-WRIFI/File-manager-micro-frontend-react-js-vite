@@ -1,12 +1,13 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment ,lazy,Suspense} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignRight, faCircleArrowRight, faPaste } from "@fortawesome/free-solid-svg-icons";
 import { goBack } from "../Redux/actionCreators/FolderActions/ActionsFolderReducer";
 import { Outlet } from "react-router";
 import Sidebar from "./Layouts/Sidebar";
-import {pasteFile} from "Files_MFE/pasteFile"
-import { MoveFile,pasetFolder,MoveFolder } from "Folders_MFE/actions"; 
+
+import { MoveFolder , pasetFolder } from "Folders_MFE/actions"; 
+import { MoveFile , pasteFile } from "Files_MFE/actions"; 
 const CreateFile   = lazy (()=> import("Files_MFE/CreateFile")); 
 const UploadFile   = lazy (()=> import("Files_MFE/UploadFile"));
 const CreateFolder = lazy (()=> import("Folders_MFE/CreateFolder")); 
@@ -100,7 +101,6 @@ function Index(){
                                 </div>
                                 <div className="col-lg-8 col-sm-6">
                                     <div className="mt-4 mt-sm-0 d-flex align-items-center justify-content-sm-end">
-
                                         <div className="mb-2 me-2">
                                             <div className="dropdown">
                                                 <button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,7 +113,6 @@ function Index(){
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div className="dropdown mb-0">
                                             <a className="btn btn-link text-muted  p-1 mt-n2" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                                                 <i className="mdi mdi-dots-vertical font-size-20"><FontAwesomeIcon icon={faAlignRight}/></i>

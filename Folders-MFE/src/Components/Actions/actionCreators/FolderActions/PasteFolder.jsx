@@ -1,13 +1,12 @@
 import { toast } from "react-toastify";
 import fire from "../../../../config/firebase";
-import { createFile } from "../FileActions/CreateFile";
+import { createFile } from "Files_MFE/actions";
 import createFolder  from "./CreateFolder";
 
 
 
 
 export const pasetFolder = (docId, data) => async (dispatch) => {
-  console.log("#####FOLDER MFE AC");
 
     const copyFolder = async (sourceFolderId, destinationParentId) => {
       try{

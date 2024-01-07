@@ -6,8 +6,6 @@ import { moveFolder } from "./ActionsFolderReducer";
 
 
 export const MoveFolder = (folderId,data,oldParentId) => async (dispatch) =>{
-  console.log("#####FOLDER MFE AC");
-
   try{
     const folderRef = fire.firestore().collection("folders").doc(folderId);  
     await folderRef.update({
