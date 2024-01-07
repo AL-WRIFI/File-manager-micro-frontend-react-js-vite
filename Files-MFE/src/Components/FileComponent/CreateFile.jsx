@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState ,Fragment } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { createFile } from "../Actions/actionCreators/FileActions/CreateFile";
+import { createFile } from "../../Actions/actionCreators/FileActions/CreateFile";
 import { toast } from "react-toastify";
 
 const CreateFile = () => {

@@ -36,4 +36,6 @@ export const addFile= (payload)=>({
     type: types.RENAME_FILE,
     payload : {name : name , docId : docId},
   });
-  
+  export const clearBuffer = () => ({
+    type: types.CLEAR_BUFFER,
+  });

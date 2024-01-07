@@ -1,30 +1,33 @@
 import { useState ,useEffect} from "react";
 import { Link, useNavigate} from "react-router-dom";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { signInUser } from "../Actions/actionCreators/authActions";
+import { signInUser ,checkIsLoggedIn } from "../../Actions/actionCreators/authActions";
 import { useDispatch ,useSelector ,shallowEqual,} from "react-redux";
 import { toast } from "react-toastify";
-import { checkIsLoggedIn } from "../Actions/actionCreators/authActions";
 
 
 const Login = () => {
 
-    const [email ,setEmail] = useState('');
-    const [password ,setPassword] = useState('');
-    const [success , setSuccess] = useState(false);
-    
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const [email ,setEmail] = useState('');
+  const [password ,setPassword] = useState('');
+  const [success , setSuccess] = useState(false);
+  
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-    const handleSubmit =(e) =>{
-      e.preventDefault();
-      if(!email || !password){
-        toast.error(" الحقول اجباريه ");
-        return;
-      }
+  const handleSubmit =(e) =>{
+    e.preventDefault();
+    if(!email || !password){
+      toast.error(" الحقول اجباريه ");
+      return;
+    }
 
-      dispatch(signInUser(email,password, setSuccess));
-    };
+    dispatch(signInUser(email,password, setSuccess));
+  };
+
+  useEffect(()=>{
+    dispatch(checkIsLoggedIn());
+  },[])
 
   // const { isAuthenticated  } = useSelector((state) =>({ 
   //   isAuthenticated : state.auth.isAuthenticated ,
@@ -41,13 +44,6 @@ const Login = () => {
   // const checkIsLoggedin =()=>{
   //   dispatch(checkIsLoggedIn());
   // }
-  useEffect(()=>{
-    dispatch(checkIsLoggedIn());
-    // if(success){
-    //   navigate("/dashboard");
-    // }
-  },[])
-
   // useEffect(()=>{
   //     if(success){
   //       navigate("/dashboard");

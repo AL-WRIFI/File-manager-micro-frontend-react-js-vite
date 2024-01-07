@@ -10,13 +10,12 @@ export default defineConfig({
       name: 'auth_mfe',
       filename: 'remoteEntry.js',
       remotes: {
-       HostApp: "http://localhost:5001/assets/remoteEntry.js",
-
+      //  HostApp: "http://localhost:5001/assets/remoteEntry.js",
       },
       exposes: {
         './Login':'./src/Components/AuthComponet/Login',
         './Register':'./src/Components/AuthComponet/Register',
-        './authActions':'./src/Components/Actions/actionCreators/authActions',
+        './authActions':'./src/Actions/actionCreators/authActions',
         './fire':'./src/config/firebase'
       },
       shared: ["react", "react-dom","redux","react-router-dom","react-redux","redux-devtools-extension","redux-thunk"]

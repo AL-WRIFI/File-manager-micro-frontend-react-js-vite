@@ -24,7 +24,7 @@ const NavbarComponent =()=>{
   // }
   const theme = darkMode ? "dark" : "light";
   return (
-    <Navbar data-bs-theme={theme}  expand="lg" className="border-bottom py-3 shadow-sm">
+    <Navbar bg={theme} expand="lg" variant={theme} className="border-bottom py-3 shadow-sm">
         <Navbar.Brand style={{ marginLeft: "60px", marginRight: "auto" }} >
           File Management System
         </Navbar.Brand>
@@ -37,8 +37,8 @@ const NavbarComponent =()=>{
                     Welcome
                   </Nav.Link>
 
-                  <Nav.Link as={Link} style={{ marginRight: "10px", marginLeft: "-10px" }}
-                    className="text-dark" to="/dashboard/profile">
+                  <Nav.Link style={{ color: darkMode  ? "white" : "black", marginRight: "10px", marginLeft: "-10px" }}
+                    className="" to="/dashboard/profile">
                     <strong>{user.displayName}</strong>
                   </Nav.Link>
 

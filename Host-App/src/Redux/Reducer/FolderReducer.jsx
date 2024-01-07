@@ -48,9 +48,12 @@ const FolderReducer = ( state=initialState,action) =>{
         case types.REMOVE_FOLDER:
         const updateFolder = state.userFolders.filter(
             (folder)=> folder.docId !== action.payload);
+        const updateDeletedFolders = state.userDeletedFolders.filter(
+            (folder) => folder.docId !== action.payload)     
         return{
             ...state,
             userFolders: updateFolder,
+            userDeletedFolders:updateDeletedFolders,
         }; 
         case types.RENAME_FOLDER:
             const renamedFolder = state.userFolders.find( (folder) =>folder.docId === action.payload.docId);
@@ -69,13 +72,13 @@ const FolderReducer = ( state=initialState,action) =>{
                 folder.docId === action.payload.folderId ? movedFolder : folder
                 ),
             };
-            case types.ADD_TO_DELETED_FOLDERS:
-            const deletedFolder = action.payload;
-            deletedFolder.data.show = false;
-            return{
-                ...state,
-                userDeletedFolders:[...state.userDeletedFolders,deletedFolder]
-            }
+        case types.ADD_TO_DELETED_FOLDERS:
+        const deletedFolder = action.payload;
+        deletedFolder.data.show = false;
+        return{
+            ...state,
+            userDeletedFolders:[...state.userDeletedFolders,deletedFolder]
+        }
        default: return state;
     }
 };

@@ -1,15 +1,15 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSave, faArrowLeftLong } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { updateFileData } from "../Actions/actionCreators/FileActions.jsx";
+import { useDispatch ,useSelector} from "react-redux";
+import { updateFileData } from "../../Actions/actionCreators/FileActions.jsx";
 
 const Header = ({ fileName, fileId, fileData, prevFileData }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const darkMode  = useSelector((state) => state.Settings.darkMode );
   return (
-    <nav className="navbar navbar-expand-lg mt-1 navbar-light bg-white shadow-sm">
+    <nav style={{ backgroundColor: darkMode ? "#181a1b" : "white" }} className="navbar navbar-expand-lg mt-1 navbar-light bg-white shadow-sm">
       <p className="navbar-brand my-0 fw-bold ms-5">{fileName}</p>
       {fileData !== prevFileData && (
         <h5 className="my-0 fw-bold ms-2 text-danger">*[modefied]</h5>

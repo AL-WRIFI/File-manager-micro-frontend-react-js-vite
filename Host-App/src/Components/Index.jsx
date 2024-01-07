@@ -1,12 +1,13 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment ,lazy,Suspense} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAlignRight, faCircleArrowRight, faPaste } from "@fortawesome/free-solid-svg-icons";
-import { goBack } from "../Redux/actionCreators/FolderActions/ActionsFolderReducer";
+import { faAlignRight, faCircleArrowRight, faPaste ,faSquareCheck} from "@fortawesome/free-solid-svg-icons";
+import { clearBuffer, goBack } from "../Redux/actionCreators/FolderActions/ActionsFolderReducer";
 import { Outlet } from "react-router";
 import Sidebar from "./Layouts/Sidebar";
-import {pasteFile} from "Files_MFE/pasteFile"
-import { MoveFile,pasetFolder,MoveFolder } from "Folders_MFE/actions"; 
+
+import { MoveFolder , pasetFolder } from "Folders_MFE/actions"; 
+import { MoveFile , pasteFile } from "Files_MFE/actions"; 
 const CreateFile   = lazy (()=> import("Files_MFE/CreateFile")); 
 const UploadFile   = lazy (()=> import("Files_MFE/UploadFile"));
 const CreateFolder = lazy (()=> import("Folders_MFE/CreateFolder")); 
@@ -35,10 +36,14 @@ function Index(){
     const checkAlreadyExists = (name) =>{
         let newName = name;
         let counter = 1;
+        let nameList;
         const dotIndex = newName.lastIndexOf('.');
         const baseName = dotIndex !== -1 ? newName.slice(0, dotIndex) : newName;
         const extension = dotIndex !== -1 ? newName.slice(dotIndex) : '';
-        const nameList = itemsBuffer.item.data.type == "folder" ? childFolders : childFiles;
+        itemsBuffer.map((el)=>{
+            nameList = el.item.data.type == "folder" ? childFolders : childFiles;
+        })
+        
         
         while (nameList.find(file => file.data.name === newName)) {
             newName = `${baseName}(${counter})${extension}`;
@@ -56,21 +61,25 @@ function Index(){
     }
 
     const pasetAction = () =>{
-        const name = checkAlreadyExists(itemsBuffer.item.data.name);
-        const docId = itemsBuffer.item.docId;
-        const parentId = itemsBuffer.item.data.parent;
-        const path = currentFolder !== "root" ? [...currentFolderData.data.path,currentFolderData.docId]:[];
-        const data = {
-            ...itemsBuffer.item.data,
-            name : name,
-            path : path,
-            parent : currentFolder,
-        }
-    
-    const actions = getTypeActions(itemsBuffer.item.data.type);
-    itemsBuffer.action === "cut" ?
-    dispatch(actions.move(docId,data,parentId)):
-    dispatch(actions.paste(docId,data));              
+
+        itemsBuffer.map((el)=>{
+            const name = checkAlreadyExists(el.item.data.name);
+            const docId = el.item.docId;
+            const parentId = el.item.data.parent;
+            const path = currentFolder !== "root" ? [...currentFolderData.data.path,currentFolderData.docId]:[];
+            const data = {
+                ...el.item.data,
+                name : name,
+                path : path,
+                parent : currentFolder,
+            }
+            const actions = getTypeActions(el.item.data.type);
+            el.action === "cut" ?
+            dispatch(actions.move(docId,data,parentId)):
+            dispatch(actions.paste(docId,data));
+            
+        })
+        dispatch(clearBuffer())        
     }  
 
     const goBackFolder = ()=>{
@@ -100,7 +109,6 @@ function Index(){
                                 </div>
                                 <div className="col-lg-8 col-sm-6">
                                     <div className="mt-4 mt-sm-0 d-flex align-items-center justify-content-sm-end">
-
                                         <div className="mb-2 me-2">
                                             <div className="dropdown">
                                                 <button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,7 +121,6 @@ function Index(){
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div className="dropdown mb-0">
                                             <a className="btn btn-link text-muted  p-1 mt-n2" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                                                 <i className="mdi mdi-dots-vertical font-size-20"><FontAwesomeIcon icon={faAlignRight}/></i>
@@ -126,7 +133,7 @@ function Index(){
                                                         </div>
                                                     </div>               
                                                     }
-                                                <a className="dropdown-item" href="#">select</a>
+                                                <a className="dropdown-item" href="#">select  &nbsp; <FontAwesomeIcon icon={faSquareCheck} /></a>
                                                 <a className="dropdown-item" href="#">share</a>
                                                 <a className="dropdown-item" href="#">info</a>
                                             </div>

@@ -2,10 +2,10 @@ import { Fragment } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ShowItems from "../ShowItemsComponent/ShowItems";
-import { useState } from "react";
 
 const FilterPage = () => {
     const { filterName } = useParams();
+    
     const { filterItems } = useSelector((state) => {
       let itemsToFilter = [];
       if (filterName === "All Docs") {
@@ -31,7 +31,7 @@ const FilterPage = () => {
         {filterItems && filterItems.length > 0 ? (
           <Fragment>
             <h1>From Shared micro</h1>
-            <ShowItems title={filterName} type="file" items={filterItems} />
+            <ShowItems title={filterName} items={filterItems} />
           </Fragment>
         ) : (
           <p className="text-center my-5"> Empty Files </p>
