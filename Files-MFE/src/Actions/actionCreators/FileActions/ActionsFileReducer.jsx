@@ -44,6 +44,12 @@ export const addFile= (payload)=>({
       payload
     }
   }
+
+  export const clearBuffer = () => ({
+    type: types.CLEAR_BUFFER,
+  });
+
+  
   // export const recoveryFile = (payload) => {
   //   return{
   //     type: types.RECOVERY_FILE,

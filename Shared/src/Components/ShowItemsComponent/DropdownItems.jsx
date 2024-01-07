@@ -4,18 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { copyItemToBuffer ,deleteFolder ,softDeleteFolder , recoveryFolder } from "Folders_MFE/actions";
 import { deleteFile ,softDeleteFile , recoveryFile} from "Files_MFE/actions";
 import Rename from './Rename';
+
 function DropdownItems({item}) {
 
   const dispatch = useDispatch();
- 
   const handleCopy = () => {
     dispatch(copyItemToBuffer({ item, action: "copy" }));
   };
-
   const handleCut = () => {
     dispatch(copyItemToBuffer({ item, action: "cut" }));
   };
-
   const handleDelete = () => {
     if(item.data.show == true){
       dispatch(item.data.type.startsWith('folder') ? softDeleteFolder(item) : softDeleteFile(item));
@@ -23,7 +21,6 @@ function DropdownItems({item}) {
       dispatch(item.data.type.startsWith('folder') ? deleteFolder(item) : deleteFile(item));
     }
   };
-
   const handleRecovery = ( ) => {
     if(item.data.show == false){
       dispatch(item.data.type.startsWith('folder') ? recoveryFolder(item) : recoveryFile(item));

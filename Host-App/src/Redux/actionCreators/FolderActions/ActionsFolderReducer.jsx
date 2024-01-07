@@ -40,3 +40,6 @@ export const renameFolder = (name , docId) => ({
 export const goBack = () => ({
   type: types.GO_BACK,
 });
+export const clearBuffer = () => ({
+  type: types.CLEAR_BUFFER,
+});

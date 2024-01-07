@@ -43,10 +43,14 @@ const FileReducer = ( state=initialState,action) =>{
             };
         case types.REMOVE_FILE:
         const updateFiles = state.userFiles.filter(
-            (file)=> file.docId !== action.payload);
+            (file) => file.docId !== action.payload);
+        const updateDeletedFiles = state.userDeletedFiles.filter(
+            (file) => file.docId !== action.payload)    
+
         return{
             ...state,
             userFiles: updateFiles,
+            userDeletedFiles: updateDeletedFiles,
         };
         case types.MOVE_FILE:
             const movedfile = state.userFiles.find( (file) =>file.docId === action.payload.docId);

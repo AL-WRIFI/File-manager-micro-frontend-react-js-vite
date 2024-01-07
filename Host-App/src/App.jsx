@@ -46,7 +46,7 @@ function App() {
   return (
     
     <Fragment> 
-    <div  style={{ backgroundColor: darkMode ? "#181a1b" : "white" }} >
+    <div style={{ backgroundColor: darkMode ? "#181a1b" : "white" }} >
       <div className="container1">
         <span style={{ color: darkMode ? "grey" : "yellow" }}>☀︎</span>
         <div className="switch-checkbox">

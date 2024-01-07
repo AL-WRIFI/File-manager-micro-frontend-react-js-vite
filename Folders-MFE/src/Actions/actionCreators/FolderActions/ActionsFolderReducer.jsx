@@ -47,6 +47,9 @@ export const addToDeletedFolders = (payload) => {
     payload
   }
 }
+export const clearBuffer = () => ({
+  type: types.CLEAR_BUFFER,
+});
 // export const recoveryFolder = (payload) => {
 //   return{
 //     type: types.RECOVERY_FOLDER,
