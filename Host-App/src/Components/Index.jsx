@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment ,lazy,Suspense} from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { faAlignRight, faCircleArrowRight, faPaste } from "@fortawesome/free-solid-svg-icons";
+import { faAlignRight, faCircleArrowRight, faPaste ,faSquareCheck} from "@fortawesome/free-solid-svg-icons";
 import { goBack } from "../Redux/actionCreators/FolderActions/ActionsFolderReducer";
 import { Outlet } from "react-router";
 import Sidebar from "./Layouts/Sidebar";
@@ -125,7 +125,7 @@ function Index(){
                                                         </div>
                                                     </div>               
                                                     }
-                                                <a className="dropdown-item" href="#">select</a>
+                                                <a className="dropdown-item" href="#">select  &nbsp; <FontAwesomeIcon icon={faSquareCheck} /></a>
                                                 <a className="dropdown-item" href="#">share</a>
                                                 <a className="dropdown-item" href="#">info</a>
                                             </div>

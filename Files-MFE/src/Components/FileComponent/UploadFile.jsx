@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { uploadFile } from "../Actions/actionCreators/FileActions/UploadFile";
+import { uploadFile } from "../../Actions/actionCreators/FileActions/UploadFile";
 import { faFileUpload, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 

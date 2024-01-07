@@ -15,9 +15,9 @@ export default defineConfig({
         Files_MFE: "http://localhost:5003/assets/remoteEntry.js"
       },
       exposes: {
-        './actions': './src/Components/Actions/actionCreators/ExportAction',
         './FoldersList': './src/Components/FolderComponent/FoldersList',
         './CreateFolder': './src/Components/FolderComponent/CreateFolder',
+        './actions': './src/Actions/actionCreators/ExportAction',
       },
       shared: ["react","react-dom","react-router-dom","redux","react-redux","redux-devtools-extension","redux-thunk","react-toastify"]
   })],

@@ -16,7 +16,7 @@ export default defineConfig({
         './FileComponent':'./src/Components/FileComponent/FileComponent',
         './CreateFile':'./src/Components/FileComponent/CreateFile',
         './UploadFile':'./src/components/FileComponent/UploadFile',
-        './actions':'./src/components/Actions/actionCreators/ExportActions',        
+        './actions':'./src/Actions/actionCreators/ExportActions',        
     },
       shared: ["react", "react-dom","redux","react-router-dom","react-redux","redux-devtools-extension","redux-thunk","react-toastify"]
   })],

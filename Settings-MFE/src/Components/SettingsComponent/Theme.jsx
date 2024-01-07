@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCheck } from "@fortawesome/free-solid-svg-icons"
-import { useSelector ,shallowEqual, useDispatch} from "react-redux";
-import { changeTheme , changePreferredColor } from "../Actions/AccountActions";
+import { useDispatch} from "react-redux";
+import { changeTheme , changePreferredColor } from "../../Actions/AccountActions";
 import { useState, useEffect } from "react";
 import "./index.scss";
 
