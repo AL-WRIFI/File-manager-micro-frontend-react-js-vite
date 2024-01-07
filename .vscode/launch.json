@@ -2,76 +2,9 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    {
-      "name": "npm run dev",
-      "type": "npm",
-      "request": "launch",
-      "preLaunchTask": "npm: start",
-      "url": "http://localhost:4200/"
-    },
-    {
-      "name": "ng test",
-      "type": "chrome",
-      "request": "launch",
-      "preLaunchTask": "npm: test",
-      "url": "http://localhost:9876/debug.html"
-    },
-    {
-      "command": "ng s shell-micro-frontend-pro -o ",
-      "name": "shellrun",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "ng s category",
-      "name": "catagoryrun",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "ng s sales",
-      "name": "salesrun",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "ng s commonData",
-      "name": "commonDatarun",
-      "request": "launch",
-      "type": "node-terminal"
-    },
-    {
-      "command": "ng s inventory",
-      "name": "inventoryrun",
-      "request": "launch",
-      "type": "node-terminal"
-    }
+    
   ],
   "compounds": [
-    {
-      "name": "run app",
-      "configurations": ["shellrun", "catagoryrun","salesrun","commonDatarun",],
-      "stopAll": true
-    }, 
-    {
-      "name": "run app catagory",
-      "configurations": ["shellrun", "catagoryrun"],
-      "stopAll": true
-    }, 
-    {
-      "name": "run app sales",
-      "configurations": ["shellrun","salesrun"],
-      "stopAll": true
-    },
-    {
-      "name": "run app commonData",
-      "configurations": ["shellrun","commonDatarun"],
-      "stopAll": true
-    },
-    {
-      "name": "run app inventory",
-      "configurations": ["shellrun","inventoryrun"],
-      "stopAll": true
-    }
+    
   ]
 }
