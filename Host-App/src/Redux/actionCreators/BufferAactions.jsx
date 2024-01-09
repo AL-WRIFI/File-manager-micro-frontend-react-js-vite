@@ -6,4 +6,11 @@ export const setSelectItemsMode = (payload) => {
     }
 }
 
+export const toggleItemSelection = (payload) => {
+    return{
+        type: "TOGGLE_ITEMS_SELECTION",
+        payload
+    }
+}
+
 

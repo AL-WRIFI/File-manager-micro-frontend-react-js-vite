@@ -4,15 +4,18 @@ import { addToDeletedFolders, removeFolder } from "./ActionsFolderReducer";
 
 
 export const softDeleteFolder = (folder) => async (dispatch) => {
+ 
   const DB = fire.firestore();
-  const folderId = folder.docId;
-  DB.collection("folders").doc(folderId).update({
-    show:false
-  }).then(()=>{
-    dispatch(removeFolder(folderId));
-    dispatch(addToDeletedFolders(folder))
-    toast.success('Folder Deleted successfully!');
-  })
+  const folderId = folder.docId; 
+    DB.collection("folders").doc(folderId).update({ show:false })
+    .then(()=>{
+        dispatch(removeFolder(folderId));
+        dispatch(addToDeletedFolders(folder))
+        toast.success('Folder Deleted successfully!');
+     })
+
+
+
   // const deleteFolder = async (folderRef, batch) => {
   //   try {
   //     const snapshot = await folderRef.get();

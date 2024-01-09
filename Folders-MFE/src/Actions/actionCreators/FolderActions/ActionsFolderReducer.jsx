@@ -24,7 +24,7 @@ export const removeFolder = (folderId) => ({
   payload: folderId,
 });
 export const copyfolderToBuffer = (payload) => ({
-  type: types.COPY_ITEM_TOBUFFER,
+  type: types.ADD_ITEM_TO_BUFFER,
   payload,
 });
 

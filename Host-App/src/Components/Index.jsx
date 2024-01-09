@@ -18,12 +18,12 @@ const CreateFolder = lazy (()=> import("Folders_MFE/CreateFolder"));
 function Index(){
     
     const dispatch = useDispatch();
-    const {childFolders ,childFiles ,currentFolder ,itemsBuffer ,currentFolderData} = useSelector((state)=>({
+    const {childFolders ,childFiles ,currentFolder ,itemsBuffer ,currentFolderData , selectItemsMode} = useSelector((state)=>({
         
         isLoading : state.Folders.isLoading, 
         currentFolder : state.Folders.currentFolder,
         itemsBuffer: state.Buffer.itemsBuffer,
-
+        selectItemsMode : state.Buffer.selectItemsMode,
         currentFolderData : state.Folders.userFolders.find(
             (folder)=> folder.docId === state.Folders.currentFolder),
 

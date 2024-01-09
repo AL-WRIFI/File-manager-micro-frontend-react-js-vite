@@ -24,6 +24,13 @@ const setSelectItemsMode = (payload) => {
     }
 }
 
+const toggleItemSelection = (payload) => {
+    return{
+        type: "TOGGLE_ITEMS_SELECTION",
+        payload
+    }
+}
+
 function ShowItems({title,items}){
 
     const ref = useRef();
@@ -42,26 +49,16 @@ function ShowItems({title,items}){
         }
     }
 
-    const { selectItemsMode } = useSelector((state)=>({ selectItemsMode: state.Buffer.selectItemsMode }))
+    const { selectItemsMode , itemsBuffer } = useSelector((state)=>({ 
+        selectItemsMode: state.Buffer.selectItemsMode,
+        itemsBuffer : state.Buffer.itemsBuffer,
+    }))
 
-    const [selectedItems, setSelectedItems] = useState([]);
 
-    const handleCheckboxChange = (item) => {
-        const updatedSelectedItems = [...selectedItems];
-        console.log(item);
-        
-        const isItemSelected = updatedSelectedItems.find((selectedItem) => selectedItem === item);
-        if (isItemSelected) {
-            const index = updatedSelectedItems.indexOf(item);
-            updatedSelectedItems.splice(index, 1);
-        } else {
-            updatedSelectedItems.push(item);
-        }
-        console.log(selectedItems);
-
-        setSelectedItems(updatedSelectedItems);
-    };
-
+   
+    const handleCheckboxChange = (file) => {
+        dispatch(toggleItemSelection(file));
+      };
 
     useOutsideClick(ref,() => {
         dispatch(setSelectItemsMode(false));
@@ -78,7 +75,7 @@ function ShowItems({title,items}){
                             <div id="card" className="card shadow-none border radius-15">
                               <div style={{ position: 'absolute', top: 0, right: 5 }}>
                                 {selectItemsMode === true ? 
-                                    <input type="checkbox" checked={el.selected} onChange={() => handleCheckboxChange(el)} className="mr-2" />
+                                    <input type="checkbox" checked={itemsBuffer.includes(el)} onChange={() => handleCheckboxChange(el)} className="mr-2" />
                                     : <DropdownItems item={el} />       
                                 }
                                 </div>
