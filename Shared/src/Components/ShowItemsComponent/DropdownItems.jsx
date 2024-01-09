@@ -9,7 +9,7 @@ function DropdownItems({item}) {
 
   const dispatch = useDispatch();
   const handleCopy = () => {
-    dispatch(copyItemToBuffer({ item, action: "copy" }));
+    dispatch(copyItemToBuffer({ data:item.data , docId:item.docId, action: "copy" }));
   };
   const handleCut = () => {
     dispatch(copyItemToBuffer({ item, action: "cut" }));

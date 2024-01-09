@@ -1,30 +1,49 @@
 import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeFolder } from "Folders_MFE/actions"; 
+import { useClickAway } from "@uidotdev/usehooks";
+import useOutsideClick from "./useOutsideClick";
 // import { changeFile } from "Files_MFE/changeFile"; 
 
 import DropdownItems from "./DropdownItems";
+import { useEffect } from "react";
+import { useRef } from "react";
 
-function ShowItems({title , items}){
-
-    const changeFile = (payload) => ({
+const changeFile = (payload) => {
+    return{
     type: "CHANGE_FILE",
     payload,
-    });
+    }
+};
     
+const setSelectItemsMode = (payload) => {
+    return{
+        type: "SET_SELECTED_ITEMS_MODE",
+        payload
+    }
+}
+
+function ShowItems({title,items}){
+
+    const ref = useRef();
+    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     
     const handleDoubleClick= (item)=>{
-     if(item.data.type === "folder"){
-        dispatch(changeFolder(item.docId));
-        //navigate(`/dashboard/folder/${item.docId}`);
-     }else{
-        dispatch(changeFile(item.docId));
-        navigate(`/dashboard/file/${item.docId}`);
-     }
+        dispatch(setSelectItemsMode(false));
+        if(item.data.type === "folder"){
+            dispatch(changeFolder(item.docId));
+            //navigate(`/dashboard/folder/${item.docId}`);
+        }else{
+            dispatch(changeFile(item.docId));
+            navigate(`/dashboard/file/${item.docId}`);
+        }
     }
+
+    const { selectItemsMode } = useSelector((state)=>({ selectItemsMode: state.Buffer.selectItemsMode }))
+
     const [selectedItems, setSelectedItems] = useState([]);
 
     const handleCheckboxChange = (item) => {
@@ -43,56 +62,44 @@ function ShowItems({title , items}){
         setSelectedItems(updatedSelectedItems);
     };
 
+
+    useOutsideClick(ref,() => {
+        dispatch(setSelectItemsMode(false));
+    })
+
+
     return(
         <Fragment>
             <h5>{title}</h5>
-            <div className="row mt-4 my-5">
-                {items.map((el, idx) => {
-                    return (
-                        <div key={idx * 55} className="col-12 col-lg-3 my-1">
-                            <div className={`card shadow-none border radius-15 ${el.selected ? 'selected-card' : ''}`}>
-                                <div style={{ position: 'absolute', top: 0, right: 5 }}>
-                                    <DropdownItems item={el} />
+                <div className="row mt-4 my-5"  >
+                    {items.map((el,idx)=>{
+                        return(
+                        <div key={idx*55} className="col-12 col-lg-3 my-1">
+                            <div id="card" className="card shadow-none border radius-15">
+                              <div style={{ position: 'absolute', top: 0, right: 5 }}>
+                                {selectItemsMode === true ? 
+                                    <input type="checkbox" checked={el.selected} onChange={() => handleCheckboxChange(el)} className="mr-2" />
+                                    : <DropdownItems item={el} />       
+                                }
                                 </div>
-                                <div className="card-body" onDoubleClick={() => handleDoubleClick(el)}>
-                                    <div className="d-flex align-items-center"  >
-                                        {/* <input style={{ position: 'absolute', top: 0, left: 5 }}
-                                            type="checkbox"
-                                            checked={el.selected}
-                                            onChange={() => handleCheckboxChange(el)}
-                                            className="mr-2"
-                                        /> */}
+                                <div className="card-body" onDoubleClick={()=>handleDoubleClick(el)} >
+                                    <div className="d-flex align-items-center">
                                         {el.data.type.startsWith('image') ? (
-                                            <div className="font-30 text-primary">
-                                                <img src={el.data.thumbnailUrl} alt={el.data.name} />
-                                            </div>
-                                        ):(
-                                            <div className="font-30 text-primary">
-                                                <i className={
-                                                        el.data.type === 'folder'
-                                                            ? 'bx bxs-folder '
-                                                            : 'lni lni-empty-file'
-                                                    } style={{ fontSize: '30px' }}> 
-                                                </i>
-                                            </div>
+                                        <div className="font-30 text-primary"> <img src={el.data.thumbnailUrl} /> </div>
+                                        ) : ( 
+                                        <div className="font-30 text-primary">
+                                            <i className={el.data.type === "folder"? "bx bxs-folder " : "lni lni-empty-file"} style={{ fontSize: '30px' }}></i>
+                                        </div>
                                         )}
                                     </div>
-                                    <div className="mb-0 text-primary" style={{ cursor: 'pointer', userSelect: 'none' }}>
-                                        {el.data.name}
-                                    </div>
-                                    {el.data.type === 'folder' ? (
-                                        <small style={{ cursor: 'pointer', userSelect: 'none' }}>{46} files</small>
-                                    ):(
-                                        '' 
-                                    )}
+                                    <div className="mb-0 text-primary" style={{cursor: "pointer" , userSelect:"none"}} >{el.data.name}</div>
+                                    {el.data.type === "folder"? <small style={{cursor: "pointer" , userSelect:"none"}} >{46} files</small> : ""}
                                 </div>
                             </div>
                         </div>
-                    );
-                })}
+                    )})}              
             </div>
-
-</Fragment>
+        </Fragment>
     )
     
 }

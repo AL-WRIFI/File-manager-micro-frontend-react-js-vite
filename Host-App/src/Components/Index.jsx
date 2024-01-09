@@ -8,6 +8,7 @@ import Sidebar from "./Layouts/Sidebar";
 
 import { MoveFolder , pasetFolder } from "Folders_MFE/actions"; 
 import { MoveFile , pasteFile } from "Files_MFE/actions"; 
+import { setSelectItemsMode } from "../Redux/actionCreators/BufferAactions";
 const CreateFile   = lazy (()=> import("Files_MFE/CreateFile")); 
 const UploadFile   = lazy (()=> import("Files_MFE/UploadFile"));
 const CreateFolder = lazy (()=> import("Folders_MFE/CreateFolder")); 
@@ -41,7 +42,7 @@ function Index(){
         const baseName = dotIndex !== -1 ? newName.slice(0, dotIndex) : newName;
         const extension = dotIndex !== -1 ? newName.slice(dotIndex) : '';
         itemsBuffer.map((el)=>{
-            nameList = el.item.data.type == "folder" ? childFolders : childFiles;
+            nameList = el.data.type == "folder" ? childFolders : childFiles;
         })
         
         
@@ -63,17 +64,17 @@ function Index(){
     const pasetAction = () =>{
 
         itemsBuffer.map((el)=>{
-            const name = checkAlreadyExists(el.item.data.name);
-            const docId = el.item.docId;
-            const parentId = el.item.data.parent;
+            const name = checkAlreadyExists(el.data.name);
+            const docId = el.docId;
+            const parentId = el.data.parent;
             const path = currentFolder !== "root" ? [...currentFolderData.data.path,currentFolderData.docId]:[];
             const data = {
-                ...el.item.data,
+                ...el.data,
                 name : name,
                 path : path,
                 parent : currentFolder,
             }
-            const actions = getTypeActions(el.item.data.type);
+            const actions = getTypeActions(el.data.type);
             el.action === "cut" ?
             dispatch(actions.move(docId,data,parentId)):
             dispatch(actions.paste(docId,data));
@@ -133,7 +134,7 @@ function Index(){
                                                         </div>
                                                     </div>               
                                                     }
-                                                <a className="dropdown-item" href="#">select  &nbsp; <FontAwesomeIcon icon={faSquareCheck} /></a>
+                                                <a onClick={ ()=> dispatch(setSelectItemsMode(true))} className="dropdown-item" href="#">select  &nbsp; <FontAwesomeIcon icon={faSquareCheck} /></a>
                                                 <a className="dropdown-item" href="#">share</a>
                                                 <a className="dropdown-item" href="#">info</a>
                                             </div>

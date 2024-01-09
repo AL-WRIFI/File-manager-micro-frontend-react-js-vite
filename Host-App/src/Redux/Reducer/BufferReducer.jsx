@@ -1,7 +1,7 @@
 import * as types from "../actionsTypes/FolderActionsType";
 
 const initialState = {
-    selectItems:false,
+    selectItemsMode:false,
     itemsBuffer:[],
 }
 
@@ -17,12 +17,11 @@ const BufferReducer = ( state=initialState,action) =>{
         return{
             itemsBuffer:[]
         };
-        case types.SET_SELECTED_ITEMS:
+        case types.SET_SELECTED_ITEMS_MODE:
         return{
             ...state,
-            selectItems: action.payload,
+            selectItemsMode: action.payload,
         };
-        
        default: return state;
     }
 };
