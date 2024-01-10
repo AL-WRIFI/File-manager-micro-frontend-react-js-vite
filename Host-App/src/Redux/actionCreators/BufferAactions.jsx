@@ -11,6 +11,12 @@ export const toggleItemSelection = (payload) => {
         type: "TOGGLE_ITEMS_SELECTION",
         payload
     }
+}    
+export const addActionBuffer = (payload) => {
+    return{
+        type: "ADD_ACTION_BUFFER",
+        payload
+    }
 }
 
 

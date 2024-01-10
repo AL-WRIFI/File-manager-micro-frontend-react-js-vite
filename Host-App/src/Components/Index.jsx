@@ -12,17 +12,19 @@ import { setSelectItemsMode } from "../Redux/actionCreators/BufferAactions";
 const CreateFile   = lazy (()=> import("Files_MFE/CreateFile")); 
 const UploadFile   = lazy (()=> import("Files_MFE/UploadFile"));
 const CreateFolder = lazy (()=> import("Folders_MFE/CreateFolder")); 
+const DropdownMenu = lazy (()=> import("Shared/DropdownMenu")); 
 // const FoldersList  = lazy (()=> import("Folders_MFE/FoldersList")); 
 
 
 function Index(){
     
     const dispatch = useDispatch();
-    const {childFolders ,childFiles ,currentFolder ,itemsBuffer ,currentFolderData , selectItemsMode} = useSelector((state)=>({
+    const {childFolders ,childFiles ,currentFolder ,itemsBuffer ,currentFolderData , selectItemsMode ,actionBuffer} = useSelector((state)=>({
         
         isLoading : state.Folders.isLoading, 
         currentFolder : state.Folders.currentFolder,
         itemsBuffer: state.Buffer.itemsBuffer,
+        actionBuffer: state.Buffer.action,
         selectItemsMode : state.Buffer.selectItemsMode,
         currentFolderData : state.Folders.userFolders.find(
             (folder)=> folder.docId === state.Folders.currentFolder),
@@ -75,7 +77,7 @@ function Index(){
                 parent : currentFolder,
             }
             const actions = getTypeActions(el.data.type);
-            el.action === "cut" ?
+            actionBuffer === "cut" ?
             dispatch(actions.move(docId,data,parentId)):
             dispatch(actions.paste(docId,data));
             
@@ -123,6 +125,7 @@ function Index(){
                                             </div>
                                         </div>
                                         <div className="dropdown mb-0">
+                                            <DropdownMenu/>
                                             <a className="btn btn-link text-muted  p-1 mt-n2" role="button" data-bs-toggle="dropdown" aria-haspopup="true">
                                                 <i className="mdi mdi-dots-vertical font-size-20"><FontAwesomeIcon icon={faAlignRight}/></i>
                                             </a>
