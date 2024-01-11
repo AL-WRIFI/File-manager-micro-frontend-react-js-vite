@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import axios from 'axios';
 import { addFile } from "./ActionsFileReducer";
 import fire from "../../../config/firebase";
+import { createFile } from "./CreateFile";
 
 
 
@@ -59,11 +60,7 @@ export const uploadFile = (file, data, setSuccess) => async (dispatch) => {
   
   const uploadFileToFirestore = async (fullData, setSuccess, dispatch) => {
     try {
-      const fileRef = await fire.firestore().collection('files').add(fullData);
-      const fileData = await (await fileRef.get()).data();
-      const fileId = fileRef.id;
-  
-      dispatch(addFile({ data: fileData, docId: fileId }));
+      dispatch(createFile(fullData))
       toast.success("File Uploaded Successfully");
       setSuccess(true);
     } catch (error) {

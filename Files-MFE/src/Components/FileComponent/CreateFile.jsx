@@ -56,7 +56,9 @@ const CreateFile = () => {
     lastAccessed: null,
     type: "file",
     name: extention ? fileName : `${fileName}.txt`,
-    path: currentFolder === "root" ? [] : [...currentFolderData.data.path,currentFolder],
+    path: 
+        currentFolder === "root" 
+          ? [] : [...currentFolderData.data.path,currentFolder],
     parent: currentFolder,
     updatedAt: new Date(),
     userId: user.uid,

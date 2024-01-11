@@ -63,6 +63,7 @@ const UploadFile = () => {
       extent: file.name.split(".").pop(),
       data: null,
       url: "",
+      show:true
     };
 
     try {
