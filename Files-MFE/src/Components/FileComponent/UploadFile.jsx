@@ -5,12 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { uploadFile } from "../../Actions/actionCreators/FileActions/UploadFile";
 import { faFileUpload, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
+import { BarLoader } from "react-spinners";
 
 
 const UploadFile = () => {
   const [showModal, setShowModal] = useState(false);
   const [file, setFile] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -67,6 +69,7 @@ const UploadFile = () => {
     };
 
     try {
+      setLoading(true);
       dispatch(uploadFile(file, data, setSuccess));
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -76,6 +79,7 @@ const UploadFile = () => {
 
   useEffect(() => {
     if (success) {
+      setLoading(false)
       setShowModal(false);
       setSuccess(false);
     }
@@ -103,10 +107,12 @@ const UploadFile = () => {
                  onChange={(e) => setFile(e.target.files[0])} />
             </Form.Group>
 
-            <Form.Group controlId="formBasicFolderSubmit" className="mt-5">
-              <Button type="submit" className="form-control" variant="primary">
+            <Form.Group controlId="formBasicFolderSubmit" className="mt-5 d-flex align-items-center justify-content-center">
+            {loading ? <BarLoader color="#0a58ca" width={300}/> :
+              <Button type="submit" className="form-control" variant="primary" disabled={loading}>
                 Upload File
               </Button>
+            }
             </Form.Group>
 
           </Form>

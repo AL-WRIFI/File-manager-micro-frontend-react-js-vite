@@ -3,7 +3,7 @@ import { useEffect } from "react";
 const useOutsideClick = (ref, handler) => {
   useEffect(() => {
     const listener = (event) => {
-      if (!event.target.closest("#card")) {
+      if (!event.target.closest("#card ,#dropdownId")) {
         handler(event);
       }
     };

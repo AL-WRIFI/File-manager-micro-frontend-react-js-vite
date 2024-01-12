@@ -5,12 +5,14 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createFolder } from "../../Actions/actionCreators/FolderActions/CreateFolder";
 import { toast } from "react-toastify";
+import { PulseLoader } from "react-spinners";
 
 const CreateFolder = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [folderName, setFolderName] = useState("");
   const [success, setSuccess] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { userFolders,user,currentFolder ,currentFolderData} = useSelector(
     (state)=>({
@@ -37,7 +39,7 @@ const CreateFolder = () => {
 
   const handleFolderSubmit = (e) => {
       e.preventDefault();
-
+      setLoading(true);
       if (!folderName) {
         toast.error("Folder Name cannot be empty");
         return;
@@ -64,6 +66,7 @@ const CreateFolder = () => {
     }
     
     try {
+
       dispatch(createFolder(data));
       toast.success("Created Folder Successfully"+data.name);
       setSuccess(true);
@@ -78,6 +81,7 @@ const CreateFolder = () => {
 
   useEffect(()=>{
     if(success){
+      setLoading(false);
       setFolderName("");
       setShowModal(false);
       setSuccess(false);
@@ -108,8 +112,8 @@ const CreateFolder = () => {
               />
             </Form.Group>
             <Form.Group controlId="formBasicFolderSubmit" className="mt-5">
-              <Button type="submit" className="form-control" variant="primary">
-                Add Folder
+              <Button type="submit" className="form-control" variant="primary" disabled={loading}>
+                {loading ? <PulseLoader color="#36d7b7" /> : "Create Folder"}
               </Button>
             </Form.Group>
           </Form>

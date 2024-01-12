@@ -41,8 +41,8 @@ function Sidebar(){
                             {/* <div type="button" className="list-group-item py-1"><i className="bx bx-music me-2"></i><span>Audio</span></div> */}
                             {/* <div type="button" className="list-group-item py-1"><i className="bx bx-beer me-2"></i><span>Zip Files</span></div> */}
                             {/* <div type="button" className="list-group-item py-1"><i className="bx bx-plug me-2"></i><span>Important</span></div> */}
-                            <div type="button" onClick={()=>{navigate("/settings")}} className="list-group-item py-1"><i className="bx bx-cog me-2"></i><span>Settings</span></div>
-                            <div type="button" onClick={()=>{handleAllFiles("Deleted Files")}} className="list-group-item py-1"><i className="bx bx-trash-alt me-2"></i><span>Deleted Files</span></div>
+                            <div type="button" onClick={()=>{dispatch(changeFolder("settings"));navigate("/settings")}} className="list-group-item py-1"><i className="bx bx-cog me-2"></i><span>Settings</span></div>
+                            <div type="button" onClick={()=>{dispatch(changeFolder("deletedFiles"));handleAllFiles("Deleted Files")}} className="list-group-item py-1"><i className="bx bx-trash-alt me-2"></i><span>Deleted Files</span></div>
                         </div>
                     </div>
                 </div>

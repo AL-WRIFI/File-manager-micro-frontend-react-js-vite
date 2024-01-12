@@ -31,12 +31,23 @@ const toggleItemSelection = (payload) => {
     }
 }
 
+const clearBuffer = () =>{
+    return{
+        type:"CLEAR_BUFFER"
+    }
+}
+
 function ShowItems({title,items}){
 
     const ref = useRef();
     const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
+    const { selectItemsMode , itemsBuffer } = useSelector((state)=>({ 
+        selectItemsMode: state.Buffer.selectItemsMode,
+        itemsBuffer : state.Buffer.itemsBuffer,
+    }))
     
     const handleDoubleClick= (item)=>{
         dispatch(setSelectItemsMode(false));
@@ -49,11 +60,6 @@ function ShowItems({title,items}){
         }
     }
 
-    const { selectItemsMode , itemsBuffer } = useSelector((state)=>({ 
-        selectItemsMode: state.Buffer.selectItemsMode,
-        itemsBuffer : state.Buffer.itemsBuffer,
-    }))
-
 
    
     const handleCheckboxChange = (file) => {
@@ -62,6 +68,7 @@ function ShowItems({title,items}){
 
     useOutsideClick(ref,() => {
         dispatch(setSelectItemsMode(false));
+        dispatch(clearBuffer())
     })
 
 
