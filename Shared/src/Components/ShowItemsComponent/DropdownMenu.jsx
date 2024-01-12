@@ -25,13 +25,14 @@ const clearBuffer = () =>{
 
 const DropdownMenu = () => {
 
-    const {isLoading,childFolders ,childFiles ,currentFolder ,itemsBuffer ,currentFolderData , selectItemsMode ,actionBuffer} = useSelector((state)=>({
+    const {isLoading,childFolders ,childFiles ,currentFolder ,itemsBuffer ,currentFolderData , selectItemsMode ,actionBuffer,userDeletedFiles} = useSelector((state)=>({
         
         isLoading : state.Folders.isLoading, 
         currentFolder : state.Folders.currentFolder,
         itemsBuffer: state.Buffer.itemsBuffer,
         actionBuffer: state.Buffer.action,
         selectItemsMode : state.Buffer.selectItemsMode,
+        userDeletedFiles: state.Files.userDeletedFiles,
         currentFolderData : state.Folders.userFolders.find(
             (folder)=> folder.docId === state.Folders.currentFolder),
 
@@ -116,9 +117,9 @@ const DropdownMenu = () => {
     handleAction({ folder: recoveryFolder, file: recoveryFile }, false);
   };
 
-  const seletClass = `dropdown-item ${childFolders.length || childFiles.length > 0 ? '' : 'disabled'}`;
+  const seletClass = `dropdown-item ${childFolders.length || childFiles.length > 0 || userDeletedFiles.length > 0 ? '' : 'disabled'}`;
   const ItemClass = `dropdown-item ${itemsBuffer.length > 0 && selectItemsMode ? '' : 'disabled'}`;
-  const recoveryClass = `dropdown-item ${currentFolder !== "deletedFiles" ? 'disabled' : ''}`;
+  // const recoveryClass = `dropdown-item ${currentFolder !== "deletedFiles" ? 'disabled' : ''}`;
 
   return (
     <div id="dropdownId" className="dropdown mb-0">
@@ -131,7 +132,7 @@ const DropdownMenu = () => {
         <li><a onClick={() => handleCopyCut("copy")} className={ItemClass}><FontAwesomeIcon icon={faCopy} /> &nbsp;Copy </a></li>
         <li><a onClick={() => handleCopyCut("cut")} className={ItemClass}><FontAwesomeIcon icon={faScissors} /> &nbsp;Cut </a></li>
         <li><a onClick={handleDelete} className={ItemClass}><FontAwesomeIcon icon={faTrashCan} /> &nbsp;Delete </a></li>
-        <li><a onClick={handleRecovery} className={recoveryClass}><FontAwesomeIcon icon={faArrowRotateRight} />&nbsp;Recovery</a></li>
+        {currentFolder === "deletedFiles" ? <li><a onClick={handleRecovery} className={ItemClass}><FontAwesomeIcon icon={faArrowRotateRight} /> &nbsp;Recovery </a></li> : "" }
       </ul>
     </div>
   );

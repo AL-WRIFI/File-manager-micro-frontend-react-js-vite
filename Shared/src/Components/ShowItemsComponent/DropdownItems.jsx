@@ -36,7 +36,7 @@ function DropdownItems({ item }) {
     <div className="float-end">
       <div className="dropdown">
         <a href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          <FontAwesomeIcon icon={faEllipsis} style={{color: "#0a58ca",}} />
+          <FontAwesomeIcon icon={faEllipsis} style={{color: "#0a58ca"}} />
         </a>
         <ul className="dropdown-menu dropdown-menu-end">
           <li><a className="dropdown-item"><Rename item={item} /></a></li>
