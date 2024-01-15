@@ -2,43 +2,33 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { faArrowRotateRight, faCopy, faScissors, faTrashCan, faAlignRight, faPaste, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { deleteFile ,softDeleteFile , recoveryFile , MoveFile , pasteFile} from "Files_MFE/actions";
+import { deleteFile ,softDeleteFile , recoveryFile , MoveFile , pasteFile } from "Files_MFE/actions";
 import { deleteFolder ,softDeleteFolder , recoveryFolder ,MoveFolder , pasetFolder } from "Folders_MFE/actions";
+import { setSelectItemsMode , clearSelectedItems } from "../../Actions/SelectedItemsActions/ActionsSelectedItemsReducer";
+import { addActionBuffer , addItemsToBuffer ,  clearBuffer } from "../../Actions/BufferActions/ActionsBufferReducer";
+
 // import { checkAlreadyExists } from '../../SharedActions/ChecKAlreadyExists';
-
-
-export const addActionBuffer = (payload) => ({
-  type: "ADD_ACTION_BUFFER",
-  payload
-});
-
-export const setSelectItemsMode = (payload) => ({
-  type: "SET_SELECTED_ITEMS_MODE",
-  payload
-});
-
-const clearBuffer = () =>{
-  return{
-      type:"CLEAR_BUFFER"
-  }
-}
 
 const DropdownMenu = () => {
 
-    const {isLoading,childFolders ,childFiles ,currentFolder ,itemsBuffer ,currentFolderData , selectItemsMode ,actionBuffer,userDeletedFiles} = useSelector((state)=>({
-        
+    const { isLoading,childFolders,childFiles,
+    currentFolder,itemsBuffer,currentFolderData,
+    selectItemsMode ,actionBuffer,userDeletedFiles,
+    userDeletedFolders , selectedItems} = useSelector((state)=>({
+
         isLoading : state.Folders.isLoading, 
         currentFolder : state.Folders.currentFolder,
         itemsBuffer: state.Buffer.itemsBuffer,
         actionBuffer: state.Buffer.action,
-        selectItemsMode : state.Buffer.selectItemsMode,
+        selectedItems: state.SelectedItems.selectedItems,
+        selectItemsMode : state.SelectedItems.selectItemsMode,
         userDeletedFiles: state.Files.userDeletedFiles,
+        userDeletedFolders: state.Folders.userDeletedFolders,
+
         currentFolderData : state.Folders.userFolders.find(
             (folder)=> folder.docId === state.Folders.currentFolder),
-
         childFolders : state.Folders.userFolders.filter(
             (folder)=> (folder.data.parent === state.Folders.currentFolder)),
-
         childFiles : state.Files.userFiles.filter(
             (file)=> (file.data.parent === state.Folders.currentFolder)),     
     }));
@@ -97,30 +87,37 @@ const DropdownMenu = () => {
   
 
   const handleCopyCut = (actionType) => {
+    dispatch(addItemsToBuffer(selectedItems))
     dispatch(addActionBuffer(actionType));
+    dispatch(clearSelectedItems()); 
   };
-
+  
   const handleAction = (action, itemCondition) => {
-    itemsBuffer.forEach((item) => {
+    selectedItems.forEach((item) => {
       if (item.data.show === itemCondition) {
         const actionFunction = item.data.type.startsWith('folder') ? action.folder : action.file;
         dispatch(actionFunction(item));
       }
     });
+    dispatch(clearSelectedItems()); 
   };
 
   const handleDelete = () => {
+    currentFolder === "deletedFiles" ? forceDelete : softDelete;
+    dispatch(clearSelectedItems());
+  };
+  const softDelete = () => {
     handleAction({ folder: softDeleteFolder, file: softDeleteFile }, true);
   };
-
+  const forceDelete = () => {
+    handleAction({ folder: deleteFolder, file: deleteFile }, false);
+  };
   const handleRecovery = () => {
     handleAction({ folder: recoveryFolder, file: recoveryFile }, false);
   };
-
-  const seletClass = `dropdown-item ${childFolders.length || childFiles.length > 0 || userDeletedFiles.length > 0 ? '' : 'disabled'}`;
-  const ItemClass = `dropdown-item ${itemsBuffer.length > 0 && selectItemsMode ? '' : 'disabled'}`;
+  const seletClass = `dropdown-item ${childFolders.length || childFiles.length > 0 || userDeletedFiles.length > 0 || userDeletedFolders.length > 0? '' : 'disabled'}`;
+  const ItemClass = `dropdown-item ${selectedItems.length > 0 && selectItemsMode ? '' : 'disabled'}`;
   // const recoveryClass = `dropdown-item ${currentFolder !== "deletedFiles" ? 'disabled' : ''}`;
-
   return (
     <div id="dropdownId" className="dropdown mb-0">
       <a className="btn btn-link text-muted p-1 mt-n2" role="button" data-bs-toggle="dropdown" aria-haspopup="true">

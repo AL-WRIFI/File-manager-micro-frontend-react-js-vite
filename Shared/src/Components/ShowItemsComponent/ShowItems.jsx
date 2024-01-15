@@ -2,12 +2,11 @@ import { Fragment, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { changeFolder } from "Folders_MFE/actions"; 
-import { useClickAway } from "@uidotdev/usehooks";
 import useOutsideClick from "./useOutsideClick";
 // import { changeFile } from "Files_MFE/changeFile"; 
+import { setSelectItemsMode , clearSelectedItems , toggleItemSelection } from "../../Actions/SelectedItemsActions/ActionsSelectedItemsReducer";
 
 import DropdownItems from "./DropdownItems";
-import { useEffect } from "react";
 import { useRef } from "react";
 
 const changeFile = (payload) => {
@@ -16,41 +15,20 @@ const changeFile = (payload) => {
     payload,
     }
 };
-    
-const setSelectItemsMode = (payload) => {
-    return{
-        type: "SET_SELECTED_ITEMS_MODE",
-        payload
-    }
-}
-
-const toggleItemSelection = (payload) => {
-    return{
-        type: "TOGGLE_ITEMS_SELECTION",
-        payload
-    }
-}
-
-const clearBuffer = () =>{
-    return{
-        type:"CLEAR_BUFFER"
-    }
-}
 
 function ShowItems({title,items}){
 
     const ref = useRef();
-    const [showModal, setShowModal] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    const { selectItemsMode , itemsBuffer } = useSelector((state)=>({ 
-        selectItemsMode: state.Buffer.selectItemsMode,
-        itemsBuffer : state.Buffer.itemsBuffer,
-    }))
+    const { selectItemsMode , selectedItems } = useSelector((state)=>({ 
+        selectItemsMode: state.SelectedItems.selectItemsMode,
+        selectedItems: state.SelectedItems.selectedItems,
+    }));
     
     const handleDoubleClick= (item)=>{
-        dispatch(setSelectItemsMode(false));
+        inverseSelected();
         if(item.data.type === "folder"){
             dispatch(changeFolder(item.docId));
             //navigate(`/dashboard/folder/${item.docId}`);
@@ -58,19 +36,20 @@ function ShowItems({title,items}){
             dispatch(changeFile(item.docId));
             navigate(`/dashboard/file/${item.docId}`);
         }
-    }
+    };
 
-
-   
     const handleCheckboxChange = (file) => {
         dispatch(toggleItemSelection(file));
-      };
+    };
 
     useOutsideClick(ref,() => {
+        inverseSelected();
+    });
+    
+    const inverseSelected = () => {
         dispatch(setSelectItemsMode(false));
-        dispatch(clearBuffer())
-    })
-
+        dispatch(clearSelectedItems());
+    }
 
     return(
         <Fragment>
@@ -80,9 +59,9 @@ function ShowItems({title,items}){
                         return(
                         <div key={idx*55} className="col-12 col-lg-3 my-1">
                             <div id="card" className="card shadow-none border radius-15">
-                              <div style={{ position: 'absolute', top: 0, right: 5 }}>
+                                <div style={{ position: 'absolute', top: 0, right: 5 }}>
                                 {selectItemsMode === true ? 
-                                    <input type="checkbox" checked={itemsBuffer.includes(el)} onChange={() => handleCheckboxChange(el)} className="mr-2" />
+                                    <input type="checkbox" checked={selectedItems.includes(el)} onChange={() => handleCheckboxChange(el)} className="mr-2" />
                                     : <DropdownItems item={el} />       
                                 }
                                 </div>

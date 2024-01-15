@@ -2,7 +2,7 @@ import { Fragment ,lazy,Suspense} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { changeFolder } from "Folders_MFE/actions";
 import { useDispatch} from "react-redux";
-import { addFilterName } from "../../Redux/actionCreators/FilterActions/ActionsFilterReducer";
+import { addFilterName } from "Shared/actions";
 
 
 const CreateFile   = lazy (()=> import("Files_MFE/CreateFile")); 

@@ -14,7 +14,7 @@ export const setLoading = (payload) => ({
   payload,
 });
 
-export const setChangeFolder=(payload)=>({
+export const changeFolder =(payload)=>({
   type: types.CHANGE_FOLDER,
   payload,
 });
@@ -23,36 +23,28 @@ export const removeFolder = (folderId) => ({
   type: types.REMOVE_FOLDER,
   payload: folderId,
 });
-export const copyfolderToBuffer = (payload) => ({
-  type: types.ADD_ITEM_TO_BUFFER,
-  payload,
-});
 
 export const moveFolder = (payload) => ({
   type: types.MOVE_FOLDER,
   payload,
 });
+
 export const renameFolder = (name , docId) => ({
   type: types.RENAME_FOLDER,
   payload : {name : name , docId : docId},
 });
 
-export const goBack = () => ({
+export const addToDeletedFolders = (payload) => ({
+  type: types.ADD_TO_DELETED_FOLDERS,
+  payload
+});
+
+export const goBackFolder = () => ({
   type: types.GO_BACK,
 });
 
-export const addToDeletedFolders = (payload) => {
-  return{
-    type: types.ADD_TO_DELETED_FOLDERS,
-    payload
-  }
-}
-export const clearBuffer = () => ({
-  type: types.CLEAR_BUFFER,
+export const recoveryFolders = (payload) => ({
+  type: types.RECOVERY_FOLDER,
+  payload
 });
-export const recoveryFolders = (payload) => {
-  return{
-    type: types.RECOVERY_FOLDER,
-    payload
-  }
-}
+

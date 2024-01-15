@@ -15,6 +15,7 @@ export default defineConfig({
        },
       exposes: {
           './settings': './src/Components/SettingsComponent/Settings',
+          './actions': './src/Actions/ExportActions',
       },
       shared: ["react","react-dom","react-router-dom","redux","react-redux","redux-devtools-extension","redux-thunk","react-toastify"]
   })],

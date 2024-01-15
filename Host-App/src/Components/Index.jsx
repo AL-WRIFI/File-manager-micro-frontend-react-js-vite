@@ -2,14 +2,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment ,lazy } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { faCircleArrowRight} from "@fortawesome/free-solid-svg-icons";
-import { goBack } from "../Redux/actionCreators/FolderActions/ActionsFolderReducer";
+// import { goBack } from "../Redux/actionCreators/FolderActions/ActionsFolderReducer";
 import { Outlet } from "react-router";
 import Sidebar from "./Layouts/Sidebar";
 import { PulseLoader } from "react-spinners";
 
-// import { MoveFolder , pasetFolder } from "Folders_MFE/actions"; 
-// import { MoveFile , pasteFile } from "Files_MFE/actions"; 
-// import { setSelectItemsMode } from "../Redux/actionCreators/BufferAactions";
+import { goBackFolder } from "Folders_MFE/actions"; 
 const CreateFile   = lazy (()=> import("Files_MFE/CreateFile")); 
 const UploadFile   = lazy (()=> import("Files_MFE/UploadFile"));
 const CreateFolder = lazy (()=> import("Folders_MFE/CreateFolder")); 
@@ -24,8 +22,8 @@ function Index(){
     }));
     
     const dispatch = useDispatch();
-    const goBackFolder = ()=>{
-       dispatch(goBack());
+    const goBack = ()=>{
+       dispatch(goBackFolder());
     }
 
     return(
@@ -41,7 +39,7 @@ function Index(){
                                     <div className="search-box mb-2 me-2">
                                         <div className="d-flex align-items-center justify-content-between ">
                                             {currentFolder !== "root" ?
-                                                <div type="button" onClick={goBackFolder} className="m-2">
+                                                <div type="button" onClick={goBack} className="m-2">
                                                     <FontAwesomeIcon icon={faCircleArrowRight} rotation={180} size="xl" className="" />  
                                                 </div>
                                             : ""}     

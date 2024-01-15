@@ -17,7 +17,8 @@ export default defineConfig({
         './ShowItems':'./src/Components/ShowItemsComponent/ShowItems',
         './FilterPage':'./src/Components/FilterPageComponent/FilterPage',        
         './SharedActions':'./src/SharedActions/ExportActions',        
-        './DropdownMenu':'./src/Components/ShowItemsComponent/DropdownMenu',        
+        './DropdownMenu':'./src/Components/ShowItemsComponent/DropdownMenu',
+        './actions':'./src/Actions/ExportActions',        
     },
     shared: ["react", "react-dom","react-router-dom","redux","react-redux","redux-devtools-extension","redux-thunk","react-toastify"]
   })],

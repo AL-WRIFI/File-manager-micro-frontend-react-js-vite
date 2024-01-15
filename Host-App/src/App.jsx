@@ -7,10 +7,10 @@ import { useSelector ,shallowEqual, useDispatch} from "react-redux";
 import Index from "./Components/Index";
 import NavbarComponent from './Components/Layouts/Navbar';
 import Dashboard from './Components/Dashboard';
-import { changeTheme  } from "./Redux/actionCreators/AccountActions";
 
 import { gitFolders } from "Folders_MFE/actions";
 import { gitFiles } from "Files_MFE/actions";
+import { changeTheme  } from "Settings_MFE/actions";
 
 const FileComponent = lazy (()=> import("Files_MFE/FileComponent")); 
 const FoldersList = lazy (()=> import("Folders_MFE/FoldersList"));
